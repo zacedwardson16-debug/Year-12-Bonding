@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bonding Lab</title>
+<style>
+html{color-scheme:light}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+
+/* Layout: lab bench, fourth in the series. Name strip + six station tabs; each station is a diagram stage beside a control column (stacks on phones). */
+:root{
+  --bg:#ebf0ee; --surface:#ffffff; --surface-2:#f1f5f3; --ink:#15211d; --muted:#53645d; --line:#c6d3cd;
+  --xa:#0f766e; --xa-soft:#d2eee8; --da:#6b3fbf; --da-soft:#e7def8; --share:#b07800; --share-soft:#f7ebc6;
+  --good:#1f7d48; --good-soft:#d9f0e2; --bad:#b3382f; --bad-soft:#f7dcd8;
+  --el-h:#f6f8f7; --el-c:#3a4440; --el-n:#3a63c4; --el-o:#cf4337; --el-si:#c08a32; --el-cl:#3c974a; --el-br:#9a3a2a; --el-i:#6a3fa0;
+  --el-f:#5f9e3f; --el-s:#b48a12; --el-p:#c96a22; --el-b:#c26d60; --el-be:#6d8231; --el-al:#7d8296; --el-xe:#23808f; --el-se:#9a6f30; --el-na:#7b52bd; --el-mg:#2a8466;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f1715; --surface:#17221f; --surface-2:#1d2b27; --ink:#e3ece8; --muted:#94a8a0; --line:#2b3c36;
+  --xa:#4fd1c0; --xa-soft:#133a35; --da:#b496f2; --da-soft:#2c2244; --share:#f0c14b; --share-soft:#3a3016;
+  --good:#62cf91; --good-soft:#15352a; --bad:#f2837a; --bad-soft:#3d1d1b;
+  --el-h:#dfe6e3; --el-c:#8d9a95; --el-n:#7b9cf0; --el-o:#ef6b5f; --el-si:#e0b062; --el-cl:#66c873; --el-br:#d0705e; --el-i:#a785dc; --el-f:#8fd16f; --el-s:#e3c04f; --el-p:#f0995a; --el-b:#e39a8f; --el-be:#a6bb63; --el-al:#aeb3c6; --el-xe:#5cc3d3; --el-se:#cfa261; --el-na:#b496f2; --el-mg:#5cc7a1; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0f1715; --surface:#17221f; --surface-2:#1d2b27; --ink:#e3ece8; --muted:#94a8a0; --line:#2b3c36;
+  --xa:#4fd1c0; --xa-soft:#133a35; --da:#b496f2; --da-soft:#2c2244; --share:#f0c14b; --share-soft:#3a3016;
+  --good:#62cf91; --good-soft:#15352a; --bad:#f2837a; --bad-soft:#3d1d1b;
+  --el-h:#dfe6e3; --el-c:#8d9a95; --el-n:#7b9cf0; --el-o:#ef6b5f; --el-si:#e0b062; --el-cl:#66c873; --el-br:#d0705e; --el-i:#a785dc; --el-f:#8fd16f; --el-s:#e3c04f; --el-p:#f0995a; --el-b:#e39a8f; --el-be:#a6bb63; --el-al:#aeb3c6; --el-xe:#5cc3d3; --el-se:#cfa261; --el-na:#b496f2; --el-mg:#5cc7a1; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+.page{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:22px 48px;display:grid;gap:22px}
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand svg{flex:none}
+.eyebrow{margin:0;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{margin:2px 0 0;font-family:var(--f-display);font-weight:800;font-size:clamp(1.9rem,4.2vw,2.7rem);line-height:1.02;letter-spacing:-.025em;text-wrap:balance}
+h2{margin:0;font-family:var(--f-display);font-weight:600;font-size:1.06rem;letter-spacing:-.005em}
+p{margin:0}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px}
+.tabs button{font:inherit;font-weight:700;font-size:.92rem;border:0;background:transparent;color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.tabs button .n{font-family:var(--f-mono);font-size:.72rem;opacity:.8}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+:focus-visible{outline:3px solid var(--xa);outline-offset:2px}
+[role="tabpanel"]{display:grid;gap:22px}
+.intro{max-width:70ch;color:var(--muted)}
+.intro b{color:var(--ink)}
+.station{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:860px){.station{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;min-width:0}
+.stage svg{width:100%;height:auto;display:block;max-width:100%}
+.stage-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.controls{display:grid;gap:20px;min-width:0}
+.ctl{display:grid;gap:9px;min-width:0}
+.small{font-size:.88rem;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.btn{font:inherit;font-weight:700;font-size:.93rem;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.2}
+.btn:hover:not(:disabled){border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-width:46px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip.ans-right{background:var(--good-soft);border-color:var(--good);color:var(--ink)}
+.chip.ans-wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--ink)}
+.grouplbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden;max-width:100%;width:max-content}
+.seg button{font:inherit;font-weight:700;border:0;background:var(--surface);color:var(--muted);padding:8px 14px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.pill{display:inline-block;padding:3px 11px;border-radius:999px;font-weight:700;font-size:.82rem;background:var(--surface-2);border:1px solid var(--line)}
+.pill.on{background:var(--good-soft);border-color:var(--good)}
+.pill.warn{background:var(--share-soft);border-color:var(--share)}
+.verdict{border-radius:var(--r);padding:12px 14px;background:var(--surface);border:1px solid var(--line);display:grid;gap:4px}
+.verdict.good{background:var(--good-soft);border-color:var(--good)}
+.verdict.bad{background:var(--bad-soft);border-color:var(--bad)}
+.verdict strong{font-family:var(--f-display);font-size:1.08rem;font-weight:600}
+details.explain{border-top:1px solid var(--line);padding-top:10px}
+details.explain summary{cursor:pointer;font-weight:700}
+details.explain p{margin-top:6px;color:var(--muted);max-width:62ch}
+.msg{font-size:.92rem;min-height:1.4em}
+.msg.good{color:var(--good)} .msg.bad{color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.84rem;color:var(--muted)}
+.legend .lx{color:var(--xa);font-weight:700;font-family:var(--f-mono)}
+.legend .ld{color:var(--da);font-weight:700;font-family:var(--f-mono)}
+.legend .ls{display:inline-block;width:14px;height:10px;border-radius:5px;background:var(--share-soft);border:1px solid var(--share);vertical-align:-1px;margin-right:4px}
+sub,sup{font-size:.68em;line-height:0}
+/* svg text + shapes */
+.t-sym{fill:var(--ink);font-family:var(--f-display);font-weight:800}
+.t-ink{fill:var(--ink);font-family:var(--f-mono)}
+.t-muted{fill:var(--muted);font-family:var(--f-mono)}
+.shell{fill:none;stroke:var(--muted);stroke-width:1.6}
+.shell.full{stroke:var(--good);stroke-width:2.2}
+.lens{fill:var(--share-soft);stroke:none}
+.x-a{stroke:var(--xa);stroke-width:2.6;stroke-linecap:round;fill:none}
+.d-b{fill:var(--da)}
+.bondline{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+
+/* station 2 + 3 canvases */
+.caption{font-size:.95rem;max-width:70ch}
+.slider{position:relative}
+.slider input{width:100%;accent-color:var(--xa);margin:0}
+.scale{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.check{display:flex;gap:10px;align-items:center;font-weight:700;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--ink);margin:0}
+.findings{display:grid;gap:8px}
+.finding{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.finding .ft{font-weight:700}
+.finding .fd{grid-column:1/-1;font-size:.88rem;color:var(--muted)}
+.finding .st{font-size:.74rem;font-weight:700;padding:2px 9px;border-radius:999px;border:1px solid var(--line);align-self:start;white-space:nowrap}
+.finding.found{border-color:var(--good)}
+.finding.found .st{background:var(--good-soft);border-color:var(--good)}
+.strip-wrap{overflow-x:auto}
+#stripSvg{width:100%;min-width:300px;height:auto;display:block}
+.props{display:grid;gap:8px}
+.prop{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:4px 12px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.prop .pk{font-weight:700}
+.prop .pv{color:var(--muted);font-size:.92rem}
+.prop.known .pv{color:var(--ink)}
+@media (max-width:420px){.prop{grid-template-columns:minmax(0,1fr)}}
+/* station 4 */
+.sortbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.score{font-family:var(--f-display);font-weight:800;font-size:1.4rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:10px;align-content:start}
+.card.right{border-color:var(--good)}
+.card.wrong{border-color:var(--bad)}
+.card h3{margin:0;font-family:var(--f-display);font-weight:600;font-size:1.05rem}
+.card dl{margin:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;font-size:.88rem}
+.card .els{font-size:.86rem;color:var(--muted);margin-top:-6px}
+.card dt{color:var(--muted)}
+.card dd{margin:0;font-family:var(--f-mono);font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.card .choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.card .choices button{font:inherit;font-size:.8rem;font-weight:700;padding:7px 4px;border-radius:7px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer;line-height:1.15}
+.card .choices button:hover:not(:disabled){border-color:var(--ink)}
+.card .choices button:disabled{cursor:default}
+.card .choices button.right{background:var(--good-soft);border-color:var(--good)}
+.card .choices button.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.card .why{font-size:.88rem;color:var(--muted)}
+.card .why b{color:var(--ink)}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+table.cmp{border-collapse:collapse;width:100%;min-width:620px;font-size:.92rem}
+table.cmp th,table.cmp td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.cmp thead th{font-family:var(--f-display);font-weight:600;background:var(--surface-2)}
+table.cmp tbody th{font-weight:700;color:var(--muted);width:22%}
+table.cmp tr:last-child td,table.cmp tr:last-child th{border-bottom:0}
+/* quiz */
+.quizbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;max-width:860px}
+.quiz{display:grid;gap:14px;max-width:860px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.q .qn{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);font-weight:700}
+.q .qt{font-weight:700;font-size:1.02rem}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:560px){.opts{grid-template-columns:minmax(0,1fr)}}
+.opt{font:inherit;text-align:left;padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--good-soft);border-color:var(--good);font-weight:700}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.fb{font-size:.92rem;color:var(--muted)}
+.fb b{color:var(--ink)}
+footer{font-size:.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;max-width:95ch}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
+
+/* bonding lab */
+.formula-big{font-family:var(--f-display);font-weight:800;font-size:clamp(2rem,5vw,3rem);line-height:1;letter-spacing:-.01em}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:860px){.two{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;align-content:start;min-width:0}
+.panel h2 .small,.ctl h2 .small{font-family:var(--f-body);font-weight:400}
+.panel svg{width:100%;height:auto;display:block;max-width:100%}
+.result{display:grid;gap:2px;border-radius:var(--r);padding:10px 12px;background:var(--surface-2);border:1px solid var(--line);min-width:0}
+.result .rv{font-family:var(--f-display);font-weight:800;font-size:1.25rem;line-height:1.15;overflow-wrap:anywhere}
+.result .rl{font-size:.72rem;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.result.hl{background:var(--xa-soft);border-color:var(--xa)}
+ol.steps{margin:0;padding:0;list-style:none;display:grid;gap:7px;counter-reset:st}
+ol.steps li{counter-increment:st;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+ol.steps li::before{content:counter(st);grid-row:span 2;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:.8rem;font-family:var(--f-mono)}
+ol.steps .sh{font-weight:700}
+ol.steps .sm{font-size:.9rem;color:var(--muted);overflow-wrap:anywhere}
+.cv{width:100%;max-width:100%;display:block;border-radius:8px;background:var(--surface-2);touch-action:none;cursor:grab;aspect-ratio:4/3}
+.cv:active{cursor:grabbing}
+.cv.wide{aspect-ratio:16/10;cursor:default}
+.cvwrap{position:relative}
+.cvcover{position:absolute;inset:0;display:grid;place-items:center;border-radius:8px;background:color-mix(in srgb,var(--surface-2) 88%,transparent);font-family:var(--f-display);font-weight:800;font-size:clamp(1.2rem,3vw,1.6rem);color:var(--muted);text-align:center;padding:16px}
+.inrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.inrow label{font-weight:700;min-width:8.5em}
+select.num,.num{font:inherit;font-family:var(--f-mono);font-size:.95rem;padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0;max-width:100%}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.stepper button{font:inherit;font-weight:800;width:34px;height:34px;border:0;background:var(--surface-2);color:var(--ink);cursor:pointer}
+.stepper button:disabled{opacity:.35;cursor:not-allowed}
+.stepper output{min-width:2.2em;text-align:center;font-family:var(--f-mono);font-weight:700}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--share-soft);border:1px solid var(--share);color:var(--ink);vertical-align:2px;margin-left:6px}
+.s-txt{fill:var(--ink);font-family:var(--f-mono);font-size:13px}
+.s-mut{fill:var(--muted);font-family:var(--f-mono);font-size:12px}
+.s-head{fill:var(--ink);font-family:var(--f-display);font-weight:600;font-size:15px}
+.s-sym{fill:var(--ink);font-family:var(--f-display);font-weight:800}
+.s-onfill{fill:#fff;font-family:var(--f-display);font-weight:800}
+.dlt{fill:var(--da);font-family:var(--f-mono);font-weight:700}
+.dlt.pos{fill:var(--xa)}
+.ebar{fill:var(--surface-2);stroke:var(--line)}
+.tiles .t-cat{fill:var(--xa-soft);stroke:var(--xa);stroke-width:1.5}
+.tiles .t-an{fill:var(--da-soft);stroke:var(--da);stroke-width:1.5}
+.grid13{display:grid;grid-template-columns:auto repeat(4,minmax(0,1fr));gap:6px;font-size:.84rem}
+.grid13 .gh{font-weight:700;color:var(--muted);font-size:.74rem;align-self:end;text-align:center}
+.grid13 .gr{font-weight:700;color:var(--muted);font-size:.74rem;align-self:center;white-space:nowrap}
+.grid13 button{font:inherit;font-size:.8rem;line-height:1.2;text-align:center;padding:7px 4px;border-radius:7px;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);cursor:pointer;min-height:48px}
+.grid13 button.found{background:var(--xa-soft);border-color:var(--xa);color:var(--ink);font-weight:700}
+.grid13 button.found span{display:block;font-weight:400;font-family:var(--f-mono);font-size:.74rem;color:var(--muted)}
+.grid13 .na{border:1px dashed var(--line);border-radius:7px;min-height:48px}
+.tablewrap{overflow-x:auto}
+.ticks{display:grid;gap:6px}
+.vs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:stretch}
+.vs .or{align-self:center;font-weight:800;color:var(--muted);font-family:var(--f-display)}
+.vsbtn{font:inherit;text-align:left;padding:12px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface-2);color:var(--ink);cursor:pointer;display:grid;gap:3px;min-width:0}
+.vsbtn b{font-family:var(--f-display);font-size:1.15rem}
+.vsbtn .small{overflow-wrap:anywhere}
+.vsbtn:hover:not(:disabled){border-color:var(--ink)}
+.vsbtn:disabled{cursor:default}
+.vsbtn.right{background:var(--good-soft);border-color:var(--good)}
+.vsbtn.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.vsbtn .bpv{font-family:var(--f-mono);font-weight:700}
+#bpChart,#fxSvg,#vdwSvg,#dbSvg,#ibSvg,#bpSvg{width:100%;height:auto;display:block;max-width:100%}
+.chips.sm .chip{min-width:0;padding:5px 10px;font-size:.9rem}
+.bp-pt{cursor:pointer}
+.chip[aria-pressed="true"] .small{color:inherit;opacity:.75}
+.card dl{grid-template-columns:minmax(0,1fr) minmax(0,max-content)}
+.card dd{overflow-wrap:anywhere}
+.panel{grid-template-columns:minmax(0,1fr)}
+.panel .seg{width:auto}
+.panel>.pill{justify-self:start}
+.s-lab{fill:var(--ink);font-family:var(--f-body);font-size:14px}
+#bpChart{min-width:600px}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div class="brand">
+      <svg width="56" height="48" viewBox="0 0 56 48" aria-hidden="true">
+        <line x1="28" y1="26" x2="10" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+        <line x1="28" y1="26" x2="46" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+        <ellipse cx="20" cy="12" rx="6" ry="9" transform="rotate(-28 20 12)" fill="var(--da)" opacity=".35"/>
+        <ellipse cx="36" cy="12" rx="6" ry="9" transform="rotate(28 36 12)" fill="var(--da)" opacity=".35"/>
+        <circle cx="28" cy="26" r="8" fill="var(--el-o)"/>
+        <circle cx="10" cy="38" r="5.5" fill="var(--surface)" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="46" cy="38" r="5.5" fill="var(--surface)" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <div>
+        <p class="eyebrow">International AS Chemistry · OxfordAQA 3.1.3</p>
+        <h1>Bonding Lab</h1>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Lab stations">
+      <button role="tab" id="tab-bonds" aria-controls="p-bonds" aria-selected="true"><span class="n">1</span>Bonds</button>
+      <button role="tab" id="tab-struct" aria-controls="p-struct" aria-selected="false" tabindex="-1"><span class="n">2</span>Structures</button>
+      <button role="tab" id="tab-shapes" aria-controls="p-shapes" aria-selected="false" tabindex="-1"><span class="n">3</span>Shapes</button>
+      <button role="tab" id="tab-polar" aria-controls="p-polar" aria-selected="false" tabindex="-1"><span class="n">4</span>Polarity</button>
+      <button role="tab" id="tab-forces" aria-controls="p-forces" aria-selected="false" tabindex="-1"><span class="n">5</span>Forces</button>
+      <button role="tab" id="tab-quiz" aria-controls="p-quiz" aria-selected="false" tabindex="-1"><span class="n">6</span>Check yourself</button>
+    </nav>
+  </header>
+
+  <!-- 1 BONDS -->
+  <section id="p-bonds" role="tabpanel" aria-labelledby="tab-bonds">
+    <p class="intro"><b>Ionic bonding</b> is the electrostatic attraction between oppositely charged ions in a lattice. A <b>covalent bond</b> is a shared pair of electrons. In a <b>co-ordinate (dative covalent) bond</b>, both electrons in the shared pair come from the same atom, and we draw it as an arrow.</p>
+    <div class="two">
+      <div class="panel">
+        <h2>Ion builder <span class="small">· balance the charges</span></h2>
+        <div class="seg" id="ibMode"><button data-m="free" aria-pressed="true">Free build</button><button data-m="target" aria-pressed="false">Challenge</button></div>
+        <p class="verdict" id="ibTarget" hidden></p>
+        <svg id="ibSvg" viewBox="0 0 520 190" role="img" aria-label="Charge balance: positive ion tiles above negative ion tiles"></svg>
+        <div class="grouplbl">Positive ion</div><div class="chips sm" id="ibCat"></div>
+        <div class="grouplbl">Negative ion</div><div class="chips sm" id="ibAn"></div>
+        <div class="row">
+          <span class="small">Positive ions</span><span class="stepper"><button id="ibCm" aria-label="One fewer positive ion">−</button><output id="ibCn">1</output><button id="ibCp" aria-label="One more positive ion">+</button></span>
+          <span class="small">Negative ions</span><span class="stepper"><button id="ibAm" aria-label="One fewer negative ion">−</button><output id="ibAn2">1</output><button id="ibAp" aria-label="One more negative ion">+</button></span>
+        </div>
+        <div class="verdict" id="ibOut" aria-live="polite"></div>
+        <div class="row"><button class="btn primary" id="ibCheck">Check</button><button class="btn" id="ibShow">Show me</button><button class="btn" id="ibNext" hidden>Next challenge</button></div>
+      </div>
+      <div class="panel">
+        <h2>Predict the charge <span class="small">· from the Periodic Table</span></h2>
+        <p class="small">Pick an element, then choose the charge on its ion.</p>
+        <div class="chips sm" id="pcEl"></div>
+        <div class="chips sm" id="pcOpt" aria-label="Charge options"></div>
+        <div class="verdict" id="pcOut" aria-live="polite"><span class="small">Metals in groups 1–3 lose electrons. Non-metals in groups 15–17 gain electrons.</span></div>
+        <div class="row"><span class="pill" id="pcScore">0 / 0</span></div>
+      </div>
+    </div>
+    <div class="station">
+      <div class="stage">
+        <div class="stage-head"><span class="formula-big" id="dbF">NH₄⁺</span><span class="pill" id="dbPill">Before</span></div>
+        <svg id="dbSvg" viewBox="0 0 600 300" role="img" aria-label="Co-ordinate bond diagram"></svg>
+        <p class="caption" id="dbCap"></p>
+      </div>
+      <div class="controls">
+        <div class="ctl"><h2>Co-ordinate bonds</h2><div class="chips sm" id="dbPick"></div></div>
+        <div class="ctl"><p class="small"><b>Predict first:</b> which atom donates the lone pair?</p><div class="chips sm" id="dbPred"></div><p class="msg" id="dbMsg" aria-live="polite"></p></div>
+        <div class="row"><button class="btn primary" id="dbGo">Form the bond</button><button class="btn" id="dbReset">Reset</button></div>
+        <details class="explain"><summary>Is a co-ordinate bond different once it forms?</summary><p>No. In NH₄⁺ all four N–H bonds are identical: same length, same strength. The arrow only records where the two electrons came from. The donor needs a lone pair; the acceptor needs room for two more electrons (H⁺ has none; B in BF₃ and Al in AlCl₃ have only six outer electrons).</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 STRUCTURES -->
+  <section id="p-struct" role="tabpanel" aria-labelledby="tab-struct" hidden>
+    <p class="intro">There are four types of crystal structure: <b>ionic</b>, <b>metallic</b>, <b>macromolecular</b> (giant covalent) and <b>molecular</b>. Melting a substance means overcoming the forces that hold its particles in place, so the type of force decides the melting point. <b>Metallic bonding</b> is the attraction between positive metal ions and delocalised electrons.</p>
+    <div class="station">
+      <div class="stage">
+        <div class="stage-head"><span class="formula-big" id="stName">Sodium chloride</span><span class="pill" id="stState">Solid</span></div>
+        <canvas class="cv wide" id="stCanvas" aria-label="Particle model of the structure"></canvas>
+        <p class="caption" id="stCap"></p>
+      </div>
+      <div class="controls">
+        <div class="ctl"><h2>Pick a substance</h2><div class="chips sm" id="stPick"></div></div>
+        <div class="ctl">
+          <h2>Heat it <span class="small">· drag the temperature</span></h2>
+          <div class="slider"><input type="range" id="stTemp" min="-50" max="1200" step="1" value="20" aria-label="Temperature in degrees Celsius"></div>
+          <div class="scale"><span>−50 °C</span><span class="mono" id="stTv">20 °C</span><span>1200 °C</span></div>
+        </div>
+        <div class="ctl"><div class="row"><button class="btn" id="stCond">Test conductivity</button><span class="pill" id="stBulb">Bulb off</span></div></div>
+        <div class="ctl"><h2>What you have found</h2><div class="props" id="stProps"></div></div>
+      </div>
+    </div>
+    <div class="sortbar"><h2>Classify from data <span class="small">· six unknown substances</span></h2><span class="score" id="sortScore">0 / 6</span></div>
+    <div class="cards" id="sortCards"></div>
+    <div class="tablewrap" id="sortSum" hidden></div>
+  </section>
+
+  <!-- 3 SHAPES -->
+  <section id="p-shapes" role="tabpanel" aria-labelledby="tab-shapes" hidden>
+    <p class="intro">Bonding pairs and lone pairs are charge clouds that repel each other, so they spread out <b>as far apart as possible</b>. Lone pairs repel more strongly: <b>lone pair–lone pair &gt; lone pair–bonding pair &gt; bonding pair–bonding pair</b>. Each lone pair squeezes the bond angles a little (about 2.5° in a tetrahedral arrangement). Drag the model to turn it.</p>
+    <div class="station">
+      <div class="stage">
+        <div class="stage-head"><span class="formula-big" id="shF">NH₃</span><span class="pill" id="shPill">Explore</span></div>
+        <div class="cvwrap"><canvas class="cv" id="shCanvas" aria-label="Rotatable 3D model of the molecule"></canvas><div class="cvcover" id="shCover" hidden>Work it out, then check</div></div>
+        <div class="results" id="shRes"></div>
+        <div class="row"><label class="check"><input type="checkbox" id="shSpin" checked>Spin</label><label class="check"><input type="checkbox" id="shLp" checked>Lone pairs</label><label class="check"><input type="checkbox" id="shAng" checked>Bond angles</label></div>
+      </div>
+      <div class="controls">
+        <div class="seg" id="shMode"><button data-m="explore" aria-pressed="true">Explore</button><button data-m="build" aria-pressed="false">Build your own</button><button data-m="practice" aria-pressed="false">Practice</button></div>
+        <div class="ctl" id="shExplore"></div>
+        <div class="ctl" id="shBuild" hidden>
+          <div class="inrow"><label for="bdC">Central atom</label><select class="num" id="bdC"></select></div>
+          <div class="inrow"><label for="bdO">Outer atom</label><select class="num" id="bdO"></select></div>
+          <div class="inrow"><label for="bdN">How many outer atoms</label><select class="num" id="bdN"></select></div>
+          <div class="inrow"><label for="bdQ">Charge</label><select class="num" id="bdQ"><option value="-1">−1</option><option value="0" selected>0</option><option value="1">+1</option></select></div>
+          <div class="row"><button class="btn primary" id="bdGo">Build it</button></div>
+          <p class="msg" id="bdMsg" aria-live="polite"></p>
+        </div>
+        <div class="ctl" id="shPractice" hidden>
+          <p class="verdict"><strong id="prQ">What shape is it?</strong><span class="small">Count the electron pairs on paper, then answer.</span></p>
+          <div class="inrow"><label for="prPairs">Electron pairs</label><select class="num" id="prPairs"></select></div>
+          <div class="inrow"><label for="prLp">Lone pairs</label><select class="num" id="prLp"></select></div>
+          <div class="inrow"><label for="prShape">Shape</label><select class="num" id="prShape"></select></div>
+          <div class="inrow"><label for="prAng">Bond angle(s)</label><select class="num" id="prAng"></select></div>
+          <div class="row"><button class="btn primary" id="prCheck">Check</button><button class="btn" id="prHint">Hint</button><button class="btn" id="prNext">Next molecule</button><span class="pill" id="prScore">0 / 0</span></div>
+          <div class="verdict" id="prOut" aria-live="polite" hidden></div>
+        </div>
+        <div class="ctl" id="shWork"><h2>Working</h2><ol class="steps" id="shSteps"></ol></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="sortbar"><h2>Shape map <span class="small">· each shape appears once you have viewed or solved one</span></h2><span class="score" id="mapScore">0 / 13</span></div>
+      <div class="tablewrap"><div class="grid13" id="shMap" style="min-width:560px"></div></div>
+    </div>
+  </section>
+
+  <!-- 4 POLARITY -->
+  <section id="p-polar" role="tabpanel" aria-labelledby="tab-polar" hidden>
+    <p class="intro"><b>Electronegativity</b> is the power of an atom to attract the pair of electrons in a covalent bond. When the two atoms differ in electronegativity, the electrons are shared unequally and the bond is <b>polar</b>: we show this with δ+ and δ−. A molecule with polar bonds has a <b>permanent dipole</b> only if its shape does not make the bond dipoles cancel.</p>
+    <div class="two">
+      <div class="panel">
+        <h2>Bond polarity <span class="small">· Pauling electronegativity</span></h2>
+        <div class="grouplbl">Atom A</div><div class="chips sm" id="enA"></div>
+        <div class="grouplbl">Atom B</div><div class="chips sm" id="enB"></div>
+        <svg id="bpSvg" viewBox="0 0 520 210" role="img" aria-label="Bond between atom A and atom B showing where the shared electrons sit"></svg>
+        <p class="caption" id="bpCap"></p>
+      </div>
+      <div class="panel">
+        <h2>Does the molecule have a dipole? <span class="small">· predict, then check</span></h2>
+        <div class="chips sm" id="poPick"></div>
+        <div class="cvwrap"><canvas class="cv" id="poCanvas" aria-label="Rotatable 3D model showing bond dipoles"></canvas></div>
+        <div class="row"><button class="btn" id="poPolar">Polar</button><button class="btn" id="poNon">Non-polar</button><label class="check"><input type="checkbox" id="poSpin" checked>Spin</label></div>
+        <div class="verdict" id="poOut" aria-live="polite"><span class="small">Decide first. The bond dipoles and their sum appear when you answer.</span></div>
+        <span class="pill" id="poScore">0 / 0</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 FORCES -->
+  <section id="p-forces" role="tabpanel" aria-labelledby="tab-forces" hidden>
+    <p class="intro">Three forces act <b>between</b> molecules: <b>van der Waals forces</b> (induced dipole–dipole, also called dispersion or London forces) act between all molecules; <b>permanent dipole–dipole forces</b> act between polar molecules; <b>hydrogen bonds</b> form when H is bonded to N, O or F and is attracted to a lone pair on N, O or F in another molecule. Boiling a molecular substance overcomes these forces: the covalent bonds do not break.</p>
+    <div class="station">
+      <div class="stage">
+        <div class="stage-head"><span class="formula-big" id="fxF">HCl</span><span class="pill" id="fxPill">Which forces?</span></div>
+        <svg id="fxSvg" viewBox="0 0 600 300" role="img" aria-label="Two molecules and the strongest force between them"></svg>
+        <p class="caption" id="fxCap"></p>
+      </div>
+      <div class="controls">
+        <div class="ctl"><h2>Pick a substance</h2><div class="chips sm" id="fxPick"></div></div>
+        <div class="ctl"><h2>Which forces act between its molecules?</h2>
+          <div class="ticks"><label class="check"><input type="checkbox" id="fxV">van der Waals</label><label class="check"><input type="checkbox" id="fxD">Permanent dipole–dipole</label><label class="check"><input type="checkbox" id="fxH">Hydrogen bonding</label></div>
+          <div class="row"><button class="btn primary" id="fxCheck">Check</button><span class="pill" id="fxScore">0 / 0</span></div>
+          <div class="verdict" id="fxOut" aria-live="polite" hidden></div>
+        </div>
+      </div>
+    </div>
+    <div class="two">
+      <div class="panel">
+        <h2>Where van der Waals forces come from</h2>
+        <div class="chips sm" id="vdPick"></div>
+        <svg id="vdwSvg" viewBox="0 0 520 200" role="img" aria-label="Two atoms with fluctuating electron clouds"></svg>
+        <p class="caption" id="vdCap"></p>
+      </div>
+      <div class="panel">
+        <div class="sortbar"><h2>Higher or lower? <span class="small">· tap the higher boiling point</span></h2><span class="score" id="hlScore">0 / 10</span></div>
+        <div class="vs" id="hlPair"></div>
+        <p class="caption" id="hlWhy" aria-live="polite"></p>
+        <div class="row"><button class="btn" id="hlNext">Next pair</button><span class="small" id="hlCount"></span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Boiling point explorer</h2>
+      <div class="seg" id="bpSet"><button data-s="hyd" aria-pressed="true">Hydrides</button><button data-s="alk" aria-pressed="false">Alkanes</button><button data-s="ng" aria-pressed="false">Noble gases and halogens</button><button data-s="mr" aria-pressed="false">Same Mᵣ</button></div>
+      <div class="tablewrap"><svg id="bpChart" viewBox="0 0 760 360" role="img" aria-label="Boiling point chart"></svg></div>
+      <p class="caption" id="bpExp"></p>
+    </div>
+  </section>
+
+  <!-- 6 QUIZ -->
+  <section id="p-quiz" role="tabpanel" aria-labelledby="tab-quiz" hidden>
+    <div class="quizbar"><p class="intro">Twelve questions across the whole topic, including comparisons between types of bonding and forces.</p><div class="row"><span class="score" id="score">0 / 12</span><button class="btn" id="quizReset">Start again</button></div></div>
+    <div class="quiz" id="quiz"></div>
+  </section>
+
+  <footer>Electronegativity values on the Pauling scale. Boiling and melting points are data-book values at 1 atm, rounded to the nearest °C (diamond and graphite sublime: values are approximate). Bond angles follow the A-level convention that each lone pair reduces the angle by about 2.5° from the ideal; real molecules vary slightly (PCl₃ is about 100°). Shapes and models are not to scale. Specification: OxfordAQA International AS Chemistry 9620, section 3.1.3.</footer>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const NS = 'http://www.w3.org/2000/svg';
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function el(tag, attrs, parent, text){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(text!=null) e.textContent=text; if(parent) parent.appendChild(e); return e; }
+const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function sizeCv(cv){ const r=cv.getBoundingClientRect(); if(!r.width||!r.height) return false; const d=Math.min(2,window.devicePixelRatio||1), w=Math.round(r.width*d), h=Math.round(r.height*d); if(cv.width!==w||cv.height!==h){ cv.width=w; cv.height=h; } return true; }
+const SUBD='₀₁₂₃₄₅₆₇₈₉', SUPD='⁰¹²³⁴⁵⁶⁷⁸⁹';
+const sub = f => String(f).replace(/\d/g,d=>SUBD[d]);
+const subN = n => n>1?String(n).replace(/\d/g,d=>SUBD[d]):'';
+function chg(q){ if(!q) return ''; const a=Math.abs(q); return (a>1?String(a).replace(/\d/g,d=>SUPD[d]):'')+(q>0?'⁺':'⁻'); }
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+const pick = a => a[Math.floor(Math.random()*a.length)];
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const minus = v => String(v).replace('-','−');
+function setPressed(host,btn){ host.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b===btn)); }
+
+/* ---------- tabs + animation loop ---------- */
+const TABS=['bonds','struct','shapes','polar','forces','quiz'];
+let ACTIVE='bonds';
+function showTab(id){ ACTIVE=id; TABS.forEach(t=>{ const on=t===id, b=$('#tab-'+t); b.setAttribute('aria-selected',on); b.tabIndex=on?0:-1; $('#p-'+t).hidden=!on; }); if(LOOPS[id]&&LOOPS[id].show) LOOPS[id].show(); }
+TABS.forEach((t,i)=>{ const b=$('#tab-'+t); b.addEventListener('click',()=>showTab(t));
+  b.addEventListener('keydown',e=>{ if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft') return; const n=TABS[(i+(e.key==='ArrowRight'?1:TABS.length-1))%TABS.length]; showTab(n); $('#tab-'+n).focus(); }); });
+const LOOPS={};
+let lastT=performance.now();
+function frame(now){ const dt=Math.min(0.05,(now-lastT)/1000); lastT=now; const L=LOOPS[ACTIVE]; if(L&&L.tick) L.tick(dt,now/1000); requestAnimationFrame(frame); }
+requestAnimationFrame(frame);
+
+/* ================= STATION 1: ion builder ================= */
+const CATS=[{f:'Na',q:1,n:'sodium'},{f:'K',q:1,n:'potassium'},{f:'Mg',q:2,n:'magnesium'},{f:'Ca',q:2,n:'calcium'},{f:'Al',q:3,n:'aluminium'},{f:'Fe',q:3,n:'iron(III)'},{f:'Cu',q:2,n:'copper(II)'},{f:'NH4',q:1,n:'ammonium',poly:true}];
+const ANS=[{f:'Cl',q:-1,n:'chloride'},{f:'Br',q:-1,n:'bromide'},{f:'O',q:-2,n:'oxide'},{f:'S',q:-2,n:'sulfide'},{f:'N',q:-3,n:'nitride'},{f:'OH',q:-1,n:'hydroxide',poly:true},{f:'NO3',q:-1,n:'nitrate',poly:true},{f:'SO4',q:-2,n:'sulfate',poly:true},{f:'CO3',q:-2,n:'carbonate',poly:true}];
+const ionLabel = i => sub(i.f)+chg(i.q);
+const IB={c:2,a:0,nc:1,na:1,mode:'free',target:null,done:false};
+const BAD=new Set(['NH4|O','NH4|S','NH4|N','Fe|N','Cu|N','K|N','Na|N','Fe|S','Al|CO3','Fe|CO3','Cu|CO3','Mg|NO3','Al|SO4','NH4|CO3','Ca|OH']);
+function part(ion,n){ return n===1?sub(ion.f):ion.poly?`(${sub(ion.f)})${subN(n)}`:sub(ion.f)+subN(n); }
+function ideal(c,a){ const qc=c.q, qa=-a.q, l=qc*qa/gcd(qc,qa); return [l/qc,l/qa]; }
+function ibChips(){
+  $('#ibCat').innerHTML=CATS.map((x,i)=>`<button class="chip" data-i="${i}" aria-pressed="${i===IB.c}">${ionLabel(x)}</button>`).join('');
+  $('#ibAn').innerHTML=ANS.map((x,i)=>`<button class="chip" data-i="${i}" aria-pressed="${i===IB.a}">${ionLabel(x)}</button>`).join('');
+  $('#ibCat').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ IB.c=+b.dataset.i; IB.done=false; ibChips(); ibDraw(); }));
+  $('#ibAn').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ IB.a=+b.dataset.i; IB.done=false; ibChips(); ibDraw(); }));
+}
+function ibDraw(){
+  const svg=$('#ibSvg'); svg.innerHTML=''; const c=CATS[IB.c], a=ANS[IB.a], u=38, x0=18;
+  const g=el('g',{class:'tiles'},svg);
+  el('text',{x:x0,y:22,class:'s-mut'},g,'positive charge');
+  for(let i=0;i<IB.nc;i++){ const x=x0+i*c.q*u; el('rect',{x,y:30,width:c.q*u-4,height:44,rx:8,class:'t-cat'},g); el('text',{x:x+(c.q*u-4)/2,y:50,'text-anchor':'middle',class:'s-sym','font-size':15},g,ionLabel(c)); for(let k=0;k<c.q;k++) el('text',{x:x+k*u+u/2-2,y:68,'text-anchor':'middle',class:'s-mut'},g,'+'); }
+  el('text',{x:x0,y:104,class:'s-mut'},g,'negative charge');
+  for(let i=0;i<IB.na;i++){ const x=x0+i*(-a.q)*u; el('rect',{x,y:112,width:-a.q*u-4,height:44,rx:8,class:'t-an'},g); el('text',{x:x+(-a.q*u-4)/2,y:132,'text-anchor':'middle',class:'s-sym','font-size':15},g,ionLabel(a)); for(let k=0;k<-a.q;k++) el('text',{x:x+k*u+u/2-2,y:150,'text-anchor':'middle',class:'s-mut'},g,'−'); }
+  const P=IB.nc*c.q, N=IB.na*-a.q, xe=x0+Math.max(P,N)*u+6;
+  el('text',{x:Math.min(500,xe),y:58,class:'s-txt'},svg,'+'+P);
+  el('text',{x:Math.min(500,xe),y:140,class:'s-txt'},svg,'−'+N);
+  const bal=P===N;
+  if(bal){ el('line',{x1:x0+P*u-4,y1:24,x2:x0+P*u-4,y2:164,stroke:'var(--good)','stroke-width':2.5,'stroke-dasharray':'5 4'},svg); }
+  el('text',{x:x0,y:182,class:'s-mut',fill:bal?'var(--good)':'var(--muted)'},svg,bal?'Charges balance: total charge 0':`Total charge ${P-N>0?'+':'−'}${Math.abs(P-N)}: add ions until the rows are the same length`);
+  $('#ibCn').textContent=IB.nc; $('#ibAn2').textContent=IB.na;
+  $('#ibCm').disabled=IB.nc<=1; $('#ibAm').disabled=IB.na<=1; $('#ibCp').disabled=IB.nc*c.q>=12; $('#ibAp').disabled=IB.na*-a.q>=12;
+  const out=$('#ibOut');
+  if(IB.mode==='free'){ out.className='verdict'+(bal?' good':'');
+    if(bal){ const g2=gcd(IB.nc,IB.na), f=part(c,IB.nc/g2)+part(a,IB.na/g2);
+      out.innerHTML=`<strong>${f}</strong><span class="small">${c.n} ${a.n}${g2>1?` · simplify ${IB.nc}:${IB.na} to ${IB.nc/g2}:${IB.na/g2}`:''}${(c.poly&&IB.nc/g2>1)||(a.poly&&IB.na/g2>1)?' · brackets go round a compound ion when you need more than one of it':''}</span>`; }
+    else out.innerHTML=`<span class="small">Change the numbers of ions until the positive and negative charges are equal.</span>`; }
+}
+function ibNewTarget(){ const opts=[]; CATS.forEach((c,i)=>ANS.forEach((a,j)=>{ if(!BAD.has(c.f+'|'+a.f)) opts.push([i,j]); })); IB.target=pick(opts); IB.done=false;
+  $('#ibTarget').hidden=false; $('#ibTarget').className='verdict'; $('#ibTarget').innerHTML=`<strong>Make ${CATS[IB.target[0]].n} ${ANS[IB.target[1]].n}</strong><span class="small">Choose the two ions and the numbers of each, then press Check.</span>`;
+  $('#ibOut').className='verdict'; $('#ibOut').innerHTML='<span class="small">Build it, then check.</span>'; $('#ibNext').hidden=true; IB.nc=1; IB.na=1; ibDraw(); }
+$('#ibMode').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ setPressed($('#ibMode'),b); IB.mode=b.dataset.m; if(IB.mode==='target') ibNewTarget(); else { $('#ibTarget').hidden=true; $('#ibNext').hidden=true; ibDraw(); } }));
+$('#ibCm').addEventListener('click',()=>{ IB.nc--; ibDraw(); }); $('#ibCp').addEventListener('click',()=>{ IB.nc++; ibDraw(); });
+$('#ibAm').addEventListener('click',()=>{ IB.na--; ibDraw(); }); $('#ibAp').addEventListener('click',()=>{ IB.na++; ibDraw(); });
+$('#ibShow').addEventListener('click',()=>{ if(IB.mode==='target'){ IB.c=IB.target[0]; IB.a=IB.target[1]; ibChips(); } const [x,y]=ideal(CATS[IB.c],ANS[IB.a]); IB.nc=x; IB.na=y; ibDraw();
+  if(IB.mode==='target'){ const c=CATS[IB.c], a=ANS[IB.a]; $('#ibOut').className='verdict'; $('#ibOut').innerHTML=`<strong>${part(c,x)+part(a,y)}</strong><span class="small">${ionLabel(c)} and ${ionLabel(a)}: ${x} × (${c.q>0?'+':''}${c.q}) = ${x*c.q} and ${y} × (${a.q}) = ${y*a.q}.</span>`; $('#ibNext').hidden=false; } });
+$('#ibCheck').addEventListener('click',()=>{ const c=CATS[IB.c], a=ANS[IB.a], out=$('#ibOut'), P=IB.nc*c.q, N=IB.na*-a.q;
+  if(IB.mode==='free'){ out.className='verdict '+(P===N?'good':'bad'); if(P!==N) out.innerHTML=`<strong>Not balanced yet</strong><span class="small">+${P} and −${N}. The total charge of an ionic compound is zero.</span>`; else ibDraw(); return; }
+  const [ti,tj]=IB.target, T=CATS[ti], A=ANS[tj];
+  if(IB.c!==ti||IB.a!==tj){ out.className='verdict bad'; out.innerHTML=`<strong>Check the ions</strong><span class="small">${T.n} is ${ionLabel(T)}; ${A.n} is ${ionLabel(A)}.</span>`; return; }
+  if(P!==N){ out.className='verdict bad'; out.innerHTML=`<strong>Right ions, but the charges do not balance</strong><span class="small">+${P} and −${N}. Change the numbers.</span>`; return; }
+  const g2=gcd(IB.nc,IB.na); out.className='verdict good'; out.innerHTML=`<strong>Correct: ${part(c,IB.nc/g2)+part(a,IB.na/g2)}</strong><span class="small">${g2>1?'Give the simplest ratio. ':''}${(c.poly&&IB.nc/g2>1)||(a.poly&&IB.na/g2>1)?'Notice the brackets round the compound ion.':'Charges balance, so the total charge is zero.'}</span>`; $('#ibNext').hidden=false; });
+$('#ibNext').addEventListener('click',ibNewTarget);
+ibChips(); ibDraw();
+
+/* ---------- predict the charge ---------- */
+const PCE=[['Na',1],['K',1],['Sr',2],['Ba',2],['Ga',13],['P',15],['S',16],['Se',16],['F',17],['Br',17],['I',17],['Ca',2]];
+const PC={el:null,score:0,tries:0,done:{}};
+const pcCharge = g => g===1?1:g===2?2:g===13?3:g===15?-3:g===16?-2:-1;
+$('#pcEl').innerHTML=PCE.map(([e,g],i)=>`<button class="chip" data-i="${i}" aria-pressed="false">${e} <span class="small">· group ${g}</span></button>`).join('');
+$('#pcOpt').innerHTML=[3,2,1,-1,-2,-3].map(q=>`<button class="chip" data-q="${q}" disabled>${q>0?'+':'−'}${Math.abs(q)}</button>`).join('');
+$('#pcEl').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ PC.el=+b.dataset.i; setPressed($('#pcEl'),b); $('#pcOpt').querySelectorAll('button').forEach(o=>{ o.disabled=false; o.classList.remove('ans-right','ans-wrong'); });
+  $('#pcOut').className='verdict'; $('#pcOut').innerHTML=`<span class="small">What charge is on the ion formed by ${PCE[PC.el][0]}?</span>`; }));
+$('#pcOpt').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ if(PC.el==null) return; const [e,g]=PCE[PC.el], q=pcCharge(g), ok=+b.dataset.q===q;
+  if(!PC.done[e]){ PC.done[e]=1; PC.tries++; if(ok) PC.score++; $('#pcScore').textContent=`${PC.score} / ${PC.tries}`; }
+  $('#pcOpt').querySelectorAll('button').forEach(o=>{ o.disabled=true; if(+o.dataset.q===q) o.classList.add('ans-right'); }); if(!ok) b.classList.add('ans-wrong');
+  const metal=q>0, k=Math.abs(q);
+  $('#pcOut').className='verdict '+(ok?'good':'bad');
+  $('#pcOut').innerHTML=`<strong>${ok?'Correct':'Not quite'}: ${e}${chg(q)}</strong><span class="small">${e} is in group ${g}. ${metal?`It is a metal, so it loses its ${k} outer electron${k>1?'s':''} to leave a full outer shell.`:`It is a non-metal with ${g-10} outer electrons, so it gains ${k} electron${k>1?'s':''} to fill its outer shell.`}</span>`; }));
+
+/* ================= co-ordinate bonds ================= */
+const DB=[
+  {id:'nh4',f:'NH₄⁺',eq:'NH₃ + H⁺ → NH₄⁺',pred:['N','H⁺'],donor:'N',
+   atoms:[{s:'N',e:'n',p0:[240,150]},{s:'H',e:'h',p0:[179,115]},{s:'H',e:'h',p0:[179,185]},{s:'H',e:'h',p0:[240,220]},{s:'H⁺',s1:'H',e:'h',p0:[490,150],p1:[322,150]}],
+   bonds:[[0,1],[0,2],[0,3]],lp:[],give:[[0,4]],charge:'+',br:[140,60,360,250],
+   cap0:'Ammonia has a lone pair on nitrogen. H⁺ has no electrons at all, so it can accept a pair.',
+   cap1:'Nitrogen donates its lone pair to H⁺. The new N→H bond is a co-ordinate bond, but once formed all four N–H bonds are identical. The ion is tetrahedral, 109.5°.'},
+  {id:'h3o',f:'H₃O⁺',eq:'H₂O + H⁺ → H₃O⁺',pred:['O','H⁺'],donor:'O',
+   atoms:[{s:'O',e:'o',p0:[240,150]},{s:'H',e:'h',p0:[179,115]},{s:'H',e:'h',p0:[179,185]},{s:'H⁺',s1:'H',e:'h',p0:[490,150],p1:[322,150]}],
+   bonds:[[0,1],[0,2]],lp:[[0,90]],give:[[0,3]],charge:'+',br:[140,60,360,250],
+   cap0:'Water has two lone pairs on oxygen. H⁺ has an empty orbital and no electrons.',
+   cap1:'Oxygen donates one lone pair to H⁺, making the oxonium ion. It keeps one lone pair, so H₃O⁺ is pyramidal, like NH₃ (107°).'},
+  {id:'bf3',f:'H₃N→BF₃',eq:'NH₃ + BF₃ → H₃NBF₃',pred:['N','B','F'],donor:'N',
+   atoms:[{s:'N',e:'n',p0:[170,150]},{s:'H',e:'h',p0:[109,115]},{s:'H',e:'h',p0:[109,185]},{s:'H',e:'h',p0:[170,220]},
+          {s:'B',e:'b',p0:[470,150],p1:[310,150]},{s:'F',e:'f',p0:[531,95],p1:[371,95]},{s:'F',e:'f',p0:[531,205],p1:[371,205]},{s:'F',e:'f',p0:[470,80],p1:[310,80]}],
+   bonds:[[0,1],[0,2],[0,3],[4,5],[4,6],[4,7]],lp:[],give:[[0,4]],charge:'',br:null,
+   cap0:'Boron in BF₃ has only six electrons in its outer shell, so it can accept a lone pair. Nitrogen in NH₃ has one lone pair.',
+   cap1:'Nitrogen donates its lone pair to boron. Both atoms now have four bonding pairs, so both are tetrahedral.'},
+  {id:'al2cl6',f:'Al₂Cl₆',eq:'2AlCl₃ → Al₂Cl₆',pred:['Cl','Al'],donor:'Cl',
+   atoms:[{s:'Al',e:'al',p0:[160,150],p1:[230,150]},{s:'Cl',e:'cl',p0:[90,90],p1:[160,90]},{s:'Cl',e:'cl',p0:[90,210],p1:[160,210]},{s:'Cl',e:'cl',p0:[230,80],p1:[300,80]},
+          {s:'Al',e:'al',p0:[440,150],p1:[370,150]},{s:'Cl',e:'cl',p0:[510,90],p1:[440,90]},{s:'Cl',e:'cl',p0:[510,210],p1:[440,210]},{s:'Cl',e:'cl',p0:[370,220],p1:[300,220]}],
+   bonds:[[0,1],[0,2],[0,3],[4,5],[4,6],[4,7]],lp:[],give:[[3,4],[7,0]],charge:'',br:null,
+   cap0:'In AlCl₃, aluminium has only six outer electrons. Every chlorine atom has three lone pairs.',
+   cap1:'At low temperatures two AlCl₃ molecules join. A lone pair on one bridging Cl is donated to the other Al, twice over, giving two co-ordinate bonds. Each Al now has four bonding pairs.'}
+];
+const DS={i:0,t:0,anim:null,guessed:false};
+const ECOL={n:'--el-n',o:'--el-o',h:'--el-h',b:'--el-b',f:'--el-f',al:'--el-al',cl:'--el-cl'};
+$('#dbPick').innerHTML=DB.map((d,i)=>`<button class="chip" data-i="${i}" aria-pressed="${i===0}">${d.f}</button>`).join('');
+$('#dbPick').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ setPressed($('#dbPick'),b); dbSet(+b.dataset.i); }));
+function dbSet(i){ DS.i=i; DS.t=0; DS.guessed=false; if(DS.anim) cancelAnimationFrame(DS.anim); const d=DB[i];
+  $('#dbF').textContent=d.f; $('#dbPill').textContent='Before'; $('#dbMsg').textContent=''; $('#dbMsg').className='msg';
+  $('#dbPred').innerHTML=d.pred.map(p=>`<button class="chip" data-p="${p}">${p}</button>`).join('');
+  $('#dbPred').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ const ok=b.dataset.p===d.donor; DS.guessed=true;
+    $('#dbPred').querySelectorAll('button').forEach(o=>{ o.disabled=true; if(o.dataset.p===d.donor) o.classList.add('ans-right'); }); if(!ok) b.classList.add('ans-wrong');
+    $('#dbMsg').className='msg '+(ok?'good':'bad'); $('#dbMsg').textContent=ok?`Yes: ${d.donor} has the lone pair. Now form the bond.`:`Not quite: the donor is ${d.donor}, the atom with a lone pair. The acceptor needs space for two electrons.`; }));
+  dbDraw(); }
+const lerp=(a,b,t)=>a+(b-a)*t;
+function dbPos(a,t){ const p1=a.p1||a.p0; return [lerp(a.p0[0],p1[0],t),lerp(a.p0[1],p1[1],t)]; }
+function dbDraw(){
+  const d=DB[DS.i], t=DS.t, svg=$('#dbSvg'); svg.innerHTML='';
+  const defs=el('defs',{},svg); const m=el('marker',{id:'dbArr',viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs); el('path',{d:'M0 0L10 5L0 10z',fill:'var(--da)'},m);
+  const P=d.atoms.map(a=>dbPos(a,t)), R=a=>a.e==='h'?17:23;
+  d.bonds.forEach(([i,j])=>el('line',{x1:P[i][0],y1:P[i][1],x2:P[j][0],y2:P[j][1],class:'bondline'},svg));
+  // donated pairs
+  d.give.forEach(([i,j])=>{ const dx=P[j][0]-P[i][0], dy=P[j][1]-P[i][1], L=Math.hypot(dx,dy), ux=dx/L, uy=dy/L;
+    if(t>=1){ el('line',{x1:P[i][0]+ux*(R(d.atoms[i])+3),y1:P[i][1]+uy*(R(d.atoms[i])+3),x2:P[j][0]-ux*(R(d.atoms[j])+4),y2:P[j][1]-uy*(R(d.atoms[j])+4),stroke:'var(--da)','stroke-width':3.4,'marker-end':'url(#dbArr)'},svg); }
+    else { const s=R(d.atoms[i])+12+Math.max(0,t-0.5)*2*(L/2-R(d.atoms[i])-12), cx=P[i][0]+ux*s, cy=P[i][1]+uy*s;
+      el('circle',{cx:cx-uy*6,cy:cy+ux*6,r:4.2,class:'d-b'},svg); el('circle',{cx:cx+uy*6,cy:cy-ux*6,r:4.2,class:'d-b'},svg); } });
+  d.lp.forEach(([i,ang])=>{ const r=R(d.atoms[i])+12, a=ang*Math.PI/180, cx=P[i][0]+Math.cos(a)*r, cy=P[i][1]+Math.sin(a)*r; el('circle',{cx:cx-6*Math.sin(a),cy:cy+6*Math.cos(a),r:4,fill:'var(--muted)'},svg); el('circle',{cx:cx+6*Math.sin(a),cy:cy-6*Math.cos(a),r:4,fill:'var(--muted)'},svg); });
+  d.atoms.forEach((a,i)=>{ const r=R(a); el('circle',{cx:P[i][0],cy:P[i][1],r,fill:`var(${ECOL[a.e]})`,stroke:'var(--ink)','stroke-opacity':.35,'stroke-width':1.5},svg);
+    const light=a.e==='h'||a.e==='f'; el('text',{x:P[i][0],y:P[i][1]+6,'text-anchor':'middle','font-size':a.e==='h'?15:17,class:light?'s-sym':'s-onfill'},svg,(t>=1&&a.s1)?a.s1:a.s); });
+  if(t>=1&&d.br){ const [x1,y1,x2,y2]=d.br; el('path',{d:`M${x1+12} ${y1}H${x1}V${y2}H${x1+12}`,fill:'none',stroke:'var(--ink)','stroke-width':2.5},svg); el('path',{d:`M${x2-12} ${y1}H${x2}V${y2}H${x2-12}`,fill:'none',stroke:'var(--ink)','stroke-width':2.5},svg); el('text',{x:x2+6,y:y1+14,class:'s-sym','font-size':22},svg,d.charge); }
+  el('text',{x:300,y:290,'text-anchor':'middle',class:'s-mut'},svg,d.eq);
+  $('#dbCap').textContent=t>=1?d.cap1:d.cap0; $('#dbPill').textContent=t>=1?'After':t>0?'Forming…':'Before';
+}
+$('#dbGo').addEventListener('click',()=>{ if(DS.t>=1) return; if(!DS.guessed){ $('#dbMsg').className='msg'; $('#dbMsg').textContent=`Predict first: tap the atom you think donates the lone pair.`; }
+  if(reduceMotion){ DS.t=1; dbDraw(); return; } const t0=performance.now(); const step=n=>{ DS.t=Math.min(1,(n-t0)/1500); dbDraw(); if(DS.t<1) DS.anim=requestAnimationFrame(step); }; DS.anim=requestAnimationFrame(step); });
+$('#dbReset').addEventListener('click',()=>dbSet(DS.i));
+dbSet(0);
+/* ================= STATION 2: structures ================= */
+const WX=160, WY=100;
+const SUBS={
+  nacl:{name:'Sodium chloride',type:'Ionic',parts:'Na⁺ and Cl⁻ ions',held:'Strong electrostatic attraction between oppositely charged ions',mp:801,bp:1413,cs:false,cl:true,
+    cap:{s:'A giant ionic lattice (shown flat): each Na⁺ is surrounded by Cl⁻ ions and each Cl⁻ by Na⁺ ions. The ions vibrate but stay in place.',l:'Above 801 °C the ions have enough energy to overcome the attraction and move past each other. Molten NaCl conducts because its ions are free to move.'}},
+  mg:{name:'Magnesium',type:'Metallic',parts:'Mg²⁺ ions and delocalised electrons',held:'Attraction between positive ions and delocalised electrons',mp:650,bp:1090,cs:true,cl:true,
+    cap:{s:'A lattice of Mg²⁺ ions in a sea of delocalised electrons, two from each atom. The strong attraction between the ions and the electrons gives a high melting point.',l:'The ions can now slide past each other, but the delocalised electrons still hold them together. Liquid magnesium still conducts.',g:'Above 1090 °C magnesium boils into separate atoms.'}},
+  diamond:{name:'Diamond',type:'Macromolecular (giant covalent)',parts:'Carbon atoms, each bonded to four others',held:'Strong covalent bonds throughout',mp:3550,giant:true,cs:false,
+    cap:{s:'Each carbon atom forms four strong covalent bonds in a tetrahedral network. Heating to 1200 °C changes nothing: about 3550 °C is needed to break enough covalent bonds.'}},
+  graphite:{name:'Graphite',type:'Macromolecular (giant covalent)',parts:'Carbon atoms in layers, each bonded to three others',held:'Strong covalent bonds within each layer',mp:3650,giant:true,cs:true,
+    cap:{s:'Layers of hexagons: each carbon forms three covalent bonds and its fourth outer electron is delocalised. Weak forces between layers let them slide. The covalent bonds inside the layers give a melting point of about 3650 °C.'}},
+  iodine:{name:'Iodine',type:'Molecular',parts:'I₂ molecules',held:'Weak van der Waals forces between I₂ molecules',mp:114,bp:184,cs:false,cl:false,
+    cap:{s:'A molecular lattice of I₂ molecules held together by weak van der Waals forces. The I–I covalent bond is strong, but melting and boiling do not break it.',l:'At 114 °C the molecules can move past each other. Every I₂ molecule stays intact: only the forces between molecules are overcome.',g:'At 184 °C the molecules separate completely. They are still I₂ molecules. Iodine also sublimes easily when warmed.'}},
+  ice:{name:'Ice',type:'Molecular',parts:'H₂O molecules',held:'Hydrogen bonds (and van der Waals forces) between H₂O molecules',mp:0,bp:100,cs:false,cl:false,
+    cap:{s:'Each water molecule is hydrogen bonded to its neighbours in an open lattice (shown flat). The open structure holds molecules further apart than in liquid water, so ice is less dense (0.92 g/cm³) and floats.',l:'At 0 °C some hydrogen bonds break and the open lattice collapses. The molecules pack closer together, so water is denser (1.00 g/cm³). Hydrogen bonds keep breaking and re-forming.',g:'At 100 °C the hydrogen bonds are overcome and the molecules separate as steam. The O–H covalent bonds do not break.'}}
+};
+const ST={key:'nacl',T:20,units:[],giant:null,elec:[],drift:0,known:{},cond:null};
+function rot(dx,dy,a){ const c=Math.cos(a), s=Math.sin(a); return [dx*c-dy*s, dx*s+dy*c]; }
+function mkUnit(hx,hy,atoms,bonds,hang){ return {hx,hy,x:hx,y:hy,vx:0,vy:0,ang:hang||0,hang:hang||0,va:0,ph:Math.random()*6.3,ph2:Math.random()*6.3,atoms,bonds:bonds||[]}; }
+function buildStruct(k){
+  const U=[]; ST.giant=null; ST.elec=[];
+  if(k==='nacl'){ for(let r=0;r<4;r++) for(let c=0;c<8;c++){ const na=(r+c)%2===0; U.push(mkUnit(24+c*16,26+r*16,[{dx:0,dy:0,r:na?3.6:5.6,col:na?'--el-na':'--el-cl',lab:na?'+':'−'}])); } }
+  if(k==='mg'){ for(let r=0;r<4;r++) for(let c=0;c<8;c++) U.push(mkUnit(24+c*16+(r%2?8:0)-4,26+r*15,[{dx:0,dy:0,r:5.2,col:'--el-mg',lab:'2+'}]));
+    for(let i=0;i<64;i++) ST.elec.push({x:16+Math.random()*128,y:18+Math.random()*64,vx:(Math.random()-.5)*30,vy:(Math.random()-.5)*30}); }
+  if(k==='iodine'){ for(let r=0;r<4;r++) for(let c=0;c<7;c++){ const a=((r+c)%2?0.6:-0.6); U.push(mkUnit(26+c*18,24+r*17,[{dx:-3.1,dy:0,r:4.1,col:'--el-i',lab:''},{dx:3.1,dy:0,r:4.1,col:'--el-i',lab:''}],[[0,1]],a)); } }
+  if(k==='ice'){ // honeycomb of O atoms
+    const L=13, pts=[]; for(let j=0;j<7;j++) for(let i=0;i<9;i++){ const x=14+i*L*Math.sqrt(3)+(j%2?L*Math.sqrt(3)/2:0), y0=16+j*L*1.5; pts.push([x,y0+((i+j)%2?0:0)]); }
+    // build true honeycomb: two sublattices
+    const P=[]; for(let j=0;j<5;j++) for(let i=0;i<7;i++){ const bx=16+i*L*Math.sqrt(3)+(j%2?L*Math.sqrt(3)/2:0), by=18+j*L*1.5; P.push([bx,by]); P.push([bx,by+L]); }
+    const O=P.filter(p=>p[0]<150&&p[1]<92);
+    const nb=O.map(()=>[]); for(let a=0;a<O.length;a++) for(let b=a+1;b<O.length;b++){ const d=Math.hypot(O[a][0]-O[b][0],O[a][1]-O[b][1]); if(Math.abs(d-L)<0.5){ nb[a].push(b); nb[b].push(a); } }
+    const don=O.map(()=>[]); const edges=[]; O.forEach((_,a)=>nb[a].forEach(b=>{ if(a<b) edges.push([a,b]); }));
+    edges.forEach(([a,b],n)=>{ const first=(n%2)?a:b, second=first===a?b:a; if(don[first].length<2) don[first].push(second); else if(don[second].length<2) don[second].push(first); });
+    O.forEach((p,a)=>{ const atoms=[{dx:0,dy:0,r:3.4,col:'--el-o',lab:''}], dirs=don[a].map(b=>Math.atan2(O[b][1]-p[1],O[b][0]-p[0]));
+      while(dirs.length<2){ const used=nb[a].map(b=>Math.atan2(O[b][1]-p[1],O[b][0]-p[0])); let best=0,bs=-1; for(let k=0;k<12;k++){ const t=k*Math.PI/6; const m=Math.min(...used.concat(dirs).map(u=>Math.abs(Math.atan2(Math.sin(t-u),Math.cos(t-u))))); if(m>bs){bs=m;best=t;} } dirs.push(best); }
+      dirs.forEach(t=>atoms.push({dx:Math.cos(t)*4.4,dy:Math.sin(t)*4.4,r:2,col:'--el-h',lab:''}));
+      const u=mkUnit(p[0],p[1],atoms,[[0,1],[0,2]],0); u.don=don[a]; U.push(u); });
+  }
+  if(k==='diamond'){ const raw=[]; const B=[[0,0,0],[0,.5,.5],[.5,0,.5],[.5,.5,0]];
+    for(let i=-2;i<2;i++) for(let j=-2;j<2;j++) for(let l=-2;l<2;l++) B.forEach(b=>{ [[0,0,0],[.25,.25,.25]].forEach(o=>{ const p=[i+b[0]+o[0]+0.125,j+b[1]+o[1]+0.125,l+b[2]+o[2]+0.125]; if(Math.hypot(...p)<1.3) raw.push(p); }); });
+    [[2,0,0],[0,2,0],[0,0,2]].forEach(()=>{}); // keep it compact
+    const A=[]; raw.forEach(p=>{ if(!A.some(q=>Math.hypot(q[0]-p[0],q[1]-p[1],q[2]-p[2])<1e-6)) A.push(p); });
+    let bonds=[]; for(let a=0;a<A.length;a++) for(let b=a+1;b<A.length;b++) if(Math.abs(Math.hypot(A[a][0]-A[b][0],A[a][1]-A[b][1],A[a][2]-A[b][2])-Math.sqrt(3)/4)<0.01) bonds.push([a,b]);
+    const deg=A.map((_,i)=>bonds.filter(e=>e[0]===i||e[1]===i).length), keep=A.map((_,i)=>deg[i]>=2);
+    const idx=[]; const A2=[]; A.forEach((p,i)=>{ if(keep[i]){ idx[i]=A2.length; A2.push(p); } }); bonds=bonds.filter(([a,b])=>keep[a]&&keep[b]).map(([a,b])=>[idx[a],idx[b]]);
+    const yaw=0.62, pit=0.38; const pr=A2.map(([x,y,z])=>{ const x1=x*Math.cos(yaw)+z*Math.sin(yaw), z1=-x*Math.sin(yaw)+z*Math.cos(yaw), y2=y*Math.cos(pit)-z1*Math.sin(pit), z2=y*Math.sin(pit)+z1*Math.cos(pit); return [80+x1*34,50-y2*34,z2]; });
+    ST.giant={atoms:pr.map(p=>({x:p[0],y:p[1],z:p[2],r:2.6,col:'--el-c'})),bonds};
+  }
+  if(k==='graphite'){ const atoms=[], bonds=[]; const yaw=0.15, pit=0.5, s3=Math.sqrt(3);
+    for(let layer=0;layer<3;layer++){ const base=atoms.length, pts=[]; const off=layer%2?[s3/2,0.5]:[0,0];
+      for(let j=-1;j<4;j++) for(let i=-1;i<6;i++){ const ax=i*s3+j*s3/2+off[0], az=j*1.5+off[1]; [[0,0],[0,1]].forEach(b=>{ const x=ax+b[0], z=az+b[1]; if(x>=-0.1&&x<=10.5&&z>=-0.1&&z<=3.1) pts.push([x,z]); }); }
+      pts.forEach(([x,z])=>{ const X=x-5.2, Y=(layer-1)*3.4, Z=z-1.5; const x1=X*Math.cos(yaw)+Z*Math.sin(yaw), z1=-X*Math.sin(yaw)+Z*Math.cos(yaw), y2=Y*Math.cos(pit)-z1*Math.sin(pit), z2=Y*Math.sin(pit)+z1*Math.cos(pit); atoms.push({x:80+x1*10,y:50-y2*10,z:z2,r:1.7,col:'--el-c',layer}); });
+      for(let a=0;a<pts.length;a++) for(let b=a+1;b<pts.length;b++) if(Math.abs(Math.hypot(pts[a][0]-pts[b][0],pts[a][1]-pts[b][1])-1)<0.02) bonds.push([base+a,base+b]); }
+    ST.giant={atoms,bonds,layers:true};
+    for(let i=0;i<30;i++){ const b=bonds[Math.floor(Math.random()*bonds.length)]; ST.elec.push({b,t:Math.random(),dir:Math.random()<.5?1:-1}); }
+  }
+  ST.units=U;
+}
+function phase(){ const S=SUBS[ST.key]; return ST.T<S.mp?'s':(S.bp!=null&&ST.T>=S.bp)?'g':'l'; }
+function stCaption(){ const S=SUBS[ST.key], p=phase(); $('#stCap').textContent=S.cap[p]||S.cap.l||S.cap.s; $('#stState').textContent={s:'Solid',l:'Liquid',g:'Gas'}[p]; }
+function stProps(){ const S=SUBS[ST.key], K=ST.known[ST.key]||{};
+  const mp=S.giant?(K.hot?`Above 1200 °C (about ${S.mp} °C)`:'Heat it to find out'):(K.mp?`${minus(S.mp)} °C`:'Heat it to find out');
+  const rows=[['Structure',S.type,true],['Particles',S.parts,true],['Held by',S.held,true],['Melting point',mp,S.giant?!!K.hot:!!K.mp],
+    ['Conducts as a solid?',K.cs!=null?(S.cs?'Yes':'No'):'Test it while solid',K.cs!=null]];
+  if(!S.giant) rows.push(['Conducts as a liquid?',K.cl!=null?(S.cl?'Yes':'No'):'Melt it, then test',K.cl!=null]);
+  $('#stProps').innerHTML=rows.map(([k,v,ok])=>`<div class="prop${ok?' known':''}"><span class="pk">${k}</span><span class="pv">${v}</span></div>`).join(''); }
+function know(k,v){ (ST.known[ST.key]=ST.known[ST.key]||{})[k]=v; stProps(); }
+function pickSt(k){ ST.key=k; ST.drift=0; $('#stBulb').textContent='Bulb off'; $('#stBulb').className='pill';
+  $$('#stPick button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k)); $('#stName').textContent=SUBS[k].name;
+  ST.T=k==='ice'?-20:20; $('#stTemp').value=ST.T; $('#stTv').textContent=minus(ST.T)+' °C'; buildStruct(k); stCaption(); stProps(); }
+$('#stPick').innerHTML=Object.keys(SUBS).map(k=>`<button class="chip" data-k="${k}" aria-pressed="false">${SUBS[k].name}</button>`).join('');
+$$('#stPick button').forEach(b=>b.addEventListener('click',()=>pickSt(b.dataset.k)));
+$('#stTemp').addEventListener('input',e=>{ ST.T=+e.target.value; $('#stTv').textContent=minus(ST.T)+' °C'; const S=SUBS[ST.key];
+  if(!S.giant&&ST.T>=S.mp) know('mp',true); if(S.giant&&ST.T>=1200) know('hot',true); ST.drift=0; $('#stBulb').textContent='Bulb off'; $('#stBulb').className='pill'; stCaption(); });
+$('#stCond').addEventListener('click',()=>{ const S=SUBS[ST.key], p=phase();
+  if(p==='g'){ $('#stCap').textContent='It is a gas now. Cool it below the boiling point to test it.'; return; }
+  const on=p==='s'?S.cs:S.cl; know(p==='s'?'cs':'cl',on); $('#stBulb').textContent=on?'Bulb lit':'Bulb off'; $('#stBulb').className='pill'+(on?' on':''); ST.drift=on?3.5:0;
+  const why={nacl:p==='s'?'The bulb stays off. The ions are fixed in the lattice, so they cannot move to carry charge.':'The bulb lights. In the molten salt the ions are free to move and carry charge.',
+    mg:'The bulb lights. The delocalised electrons move through the structure and carry charge.',diamond:'The bulb stays off. All four outer electrons of each carbon are used in bonds: there are no delocalised electrons.',
+    graphite:'The bulb lights. Each carbon has one delocalised electron, which moves along the layers.',iodine:'The bulb stays off. I₂ molecules are neutral: there are no ions or free electrons.',ice:'The bulb stays off. H₂O molecules are neutral, so pure water and ice barely conduct.'}[ST.key];
+  $('#stCap').textContent=why; });
+const stc=$('#stCanvas'), sx=stc.getContext('2d');
+function stTick(dt,t){
+  const S=SUBS[ST.key], p=phase(), U=ST.units; ST.drift=Math.max(0,ST.drift-dt);
+  const amp=S.giant?0.25+0.5*Math.min(1,(ST.T+50)/1250):0.35+1.6*Math.max(0,Math.min(1,(ST.T+50)/(S.mp+50)));
+  const liqTop=ST.key==='ice'?32:ST.key==='iodine'?28:20, liqW=ST.key==='ice'?[14,146]:[10,150];
+  for(const u of U){
+    if(p==='s'){ const tx=u.hx+amp*Math.sin(t*9+u.ph), ty=u.hy+amp*Math.cos(t*11+u.ph2); u.x+=(tx-u.x)*Math.min(1,dt*4); u.y+=(ty-u.y)*Math.min(1,dt*4); u.ang+=(u.hang+0.05*Math.sin(t*7+u.ph)-u.ang)*Math.min(1,dt*4); u.vx=u.vy=0; }
+    else { const sp=p==='l'?18:70; u.vx+=(Math.random()-.5)*sp*dt*8; u.vy+=(Math.random()-.5)*sp*dt*8; if(p==='l'){ u.vx*=0.94; u.vy*=0.94; u.vy+=6*dt; } const v=Math.hypot(u.vx,u.vy); if(p==='g'&&v<40){ u.vx*=1.05; u.vy*=1.05; } if(v>sp*1.4){ u.vx*=sp*1.4/v; u.vy*=sp*1.4/v; }
+      if(ST.drift>0&&ST.key==='nacl'){ u.vx+=(u.atoms[0].lab==='+'?1:-1)*20*dt; }
+      u.x+=u.vx*dt; u.y+=u.vy*dt; u.va+=(Math.random()-.5)*dt*20; u.va*=0.96; u.ang+=u.va*dt*(p==='g'?2:1);
+      const x0=p==='l'?liqW[0]:6, x1=p==='l'?liqW[1]:154, y0=p==='l'?liqTop:6, y1=94;
+      if(u.x<x0){u.x=x0;u.vx=Math.abs(u.vx);} if(u.x>x1){u.x=x1;u.vx=-Math.abs(u.vx);} if(u.y<y0){u.y=y0;u.vy=Math.abs(u.vy);} if(u.y>y1){u.y=y1;u.vy=-Math.abs(u.vy);} } }
+  if(p!=='s'){ const dmin=ST.key==='nacl'?9:ST.key==='mg'?10:ST.key==='ice'?7.5:11; for(let i=0;i<U.length;i++) for(let j=i+1;j<U.length;j++){ const a=U[i], b=U[j], dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy)||0.01; if(d<dmin){ const f=(dmin-d)/2/d; a.x-=dx*f; a.y-=dy*f; b.x+=dx*f; b.y+=dy*f; } } }
+  // electrons
+  if(ST.key==='mg'&&p!=='g') for(const e of ST.elec){ e.vx+=(Math.random()-.5)*200*dt; e.vy+=(Math.random()-.5)*200*dt; const v=Math.hypot(e.vx,e.vy); if(v>45){e.vx*=45/v;e.vy*=45/v;} e.x+=(e.vx+(ST.drift>0?40:0))*dt; e.y+=e.vy*dt;
+    const xs=U.map(u=>u.x), ys=U.map(u=>u.y), X0=Math.min(...xs)-6, X1=Math.max(...xs)+6, Y0=Math.min(...ys)-6, Y1=Math.max(...ys)+6;
+    if(e.x>X1) e.x=ST.drift>0?X0:X1, e.vx=ST.drift>0?e.vx:-Math.abs(e.vx); if(e.x<X0){e.x=X0;e.vx=Math.abs(e.vx);} if(e.y<Y0){e.y=Y0;e.vy=Math.abs(e.vy);} if(e.y>Y1){e.y=Y1;e.vy=-Math.abs(e.vy);} }
+  if(ST.key==='graphite'){ const G=ST.giant; for(const e of ST.elec){ e.t+=dt*(ST.drift>0?2.2:0.8)*e.dir; if(e.t>1||e.t<0){ const [a,b]=e.b, at=e.t>1?b:a; const opts=G.bonds.filter(q=>(q[0]===at||q[1]===at)&&q!==e.b);
+      let nx=opts[Math.floor(Math.random()*opts.length)]; if(ST.drift>0){ nx=opts.reduce((best,q)=>{ const o=q[0]===at?q[1]:q[0]; return (!best||G.atoms[o].x>G.atoms[best[0]===at?best[1]:best[0]].x)?q:best; },null); }
+      if(G.atoms[at].x>150) { const left=G.atoms.map((a,i)=>i).filter(i=>G.atoms[i].layer===G.atoms[at].layer&&G.atoms[i].x<20); if(left.length){ const s=left[Math.floor(Math.random()*left.length)]; nx=G.bonds.find(q=>q[0]===s||q[1]===s); } }
+      if(!nx) nx=e.b; e.b=nx[0]===at||nx[1]===at?(nx[0]===at?nx:[nx[1],nx[0]]):nx; e.t=0; e.dir=1; } } }
+  stDraw(t,p);
+}
+function stDraw(t,p){
+  if(!sizeCv(stc)) return; const W=stc.width, H=stc.height, s=Math.min(W/WX,H/WY), ox=(W-WX*s)/2, oy=(H-WY*s)/2, c=sx;
+  c.setTransform(1,0,0,1,0,0); c.clearRect(0,0,W,H); c.translate(ox,oy);
+  const ink=tok('--ink'), muted=tok('--muted'), col=n=>tok(n);
+  if(p==='l'&&ST.key!=='mg'){ c.fillStyle=tok('--xa-soft'); c.globalAlpha=.45; const top=(ST.key==='ice'?32:ST.key==='iodine'?28:20)-6; c.fillRect((ST.key==='ice'?8:4)*s,top*s,(ST.key==='ice'?144:152)*s,(100-top-1)*s); c.globalAlpha=1; }
+  if(ST.giant){ const G=ST.giant, jit=0.25+0.5*Math.min(1,(ST.T+50)/1250); const pos=G.atoms.map((a,i)=>[a.x+jit*Math.sin(t*9+i),a.y+jit*Math.cos(t*11+i*1.7)]);
+    const zs=G.atoms.map(a=>a.z), zmin=Math.min(...zs), zmax=Math.max(...zs), fade=z=>0.35+0.65*(1-(z-zmin)/(zmax-zmin||1));
+    const items=[]; G.bonds.forEach(([a,b])=>items.push({k:'b',a,b,z:(G.atoms[a].z+G.atoms[b].z)/2})); G.atoms.forEach((a,i)=>items.push({k:'a',i,z:a.z})); items.sort((x,y)=>y.z-x.z);
+    for(const it of items){ c.globalAlpha=fade(it.z); if(it.k==='b'){ c.strokeStyle=muted; c.lineWidth=1.1*s; c.beginPath(); c.moveTo(pos[it.a][0]*s,pos[it.a][1]*s); c.lineTo(pos[it.b][0]*s,pos[it.b][1]*s); c.stroke(); }
+      else { const a=G.atoms[it.i]; c.fillStyle=col(a.col); c.beginPath(); c.arc(pos[it.i][0]*s,pos[it.i][1]*s,a.r*s,0,6.3); c.fill(); } }
+    c.globalAlpha=1;
+    if(ST.key==='graphite'){ c.fillStyle=tok('--xa'); for(const e of ST.elec){ const [a,b]=e.b, A=pos[a], B=pos[b]; c.globalAlpha=.85; c.beginPath(); c.arc((A[0]+(B[0]-A[0])*e.t)*s,(A[1]+(B[1]-A[1])*e.t)*s,1.1*s,0,6.3); c.fill(); } c.globalAlpha=1; }
+    return; }
+  const U=ST.units;
+  // hydrogen bonds for ice / water
+  if(ST.key==='ice'){ c.strokeStyle=tok('--share'); c.lineWidth=0.9*s; c.setLineDash([2*s,2*s]);
+    if(p==='s'){ U.forEach(u=>u.don.forEach((b,k)=>{ const h=u.atoms[k+1], [hx,hy]=rot(h.dx,h.dy,u.ang), B=U[b]; c.beginPath(); c.moveTo((u.x+hx*1.25)*s,(u.y+hy*1.25)*s); c.lineTo((B.x-(B.x-u.x)*0.27)*s,(B.y-(B.y-u.y)*0.27)*s); c.stroke(); })); }
+    else if(p==='l'){ for(const u of U) for(let k=1;k<3;k++){ const h=u.atoms[k], [hx,hy]=rot(h.dx,h.dy,u.ang), X=u.x+hx, Y=u.y+hy; for(const v of U){ if(v===u) continue; const d=Math.hypot(v.x-X,v.y-Y); if(d<6.5&&d>2.5){ c.beginPath(); c.moveTo(X*s,Y*s); c.lineTo(v.x*s,v.y*s); c.stroke(); break; } } } }
+    c.setLineDash([]); }
+  if(ST.key==='mg'&&p!=='g'){ c.fillStyle=tok('--xa'); c.globalAlpha=.8; for(const e of ST.elec){ c.beginPath(); c.arc(e.x*s,e.y*s,1.1*s,0,6.3); c.fill(); } c.globalAlpha=1; }
+  for(const u of U){ const P=u.atoms.map(a=>{ const [dx,dy]=rot(a.dx,a.dy,u.ang); return [u.x+dx,u.y+dy]; });
+    c.strokeStyle=muted; c.lineWidth=1.3*s; u.bonds.forEach(([i,j])=>{ c.beginPath(); c.moveTo(P[i][0]*s,P[i][1]*s); c.lineTo(P[j][0]*s,P[j][1]*s); c.stroke(); });
+    u.atoms.forEach((a,i)=>{ c.fillStyle=col(a.col); c.beginPath(); c.arc(P[i][0]*s,P[i][1]*s,a.r*s,0,6.3); c.fill(); c.strokeStyle=ink; c.globalAlpha=.3; c.lineWidth=.4*s; c.stroke(); c.globalAlpha=1;
+      const lab=(ST.key==='mg'&&p==='g')?'':a.lab; if(lab){ c.fillStyle=a.col==='--el-cl'||a.col==='--el-mg'||a.col==='--el-na'?'#fff':ink; c.font=`700 ${a.r*1.15*s}px "JetBrains Mono", monospace`; c.textAlign='center'; c.textBaseline='middle'; c.fillText(lab,P[i][0]*s,P[i][1]*s+0.3*s); } }); }
+}
+LOOPS.struct={tick:stTick};
+
+/* classify from data */
+const SORT=[
+  {id:'P',d:[['Melting point','2852 °C'],['Conducts as a solid','no'],['Conducts when molten','yes'],['Soluble in water','slightly']],a:0,who:'magnesium oxide',why:'Conducts only when molten, so it contains ions that are fixed in the solid and free in the liquid. The very high melting point comes from the strong attraction between Mg²⁺ and O²⁻ ions.'},
+  {id:'Q',d:[['Melting point','1085 °C'],['Conducts as a solid','yes'],['Conducts when molten','yes'],['Soluble in water','no']],a:1,who:'copper',why:'Conducts as a solid and as a liquid: delocalised electrons. That makes it metallic.'},
+  {id:'R',d:[['Melting point','1710 °C'],['Conducts as a solid','no'],['Conducts when molten','no'],['Soluble in water','no']],a:2,who:'silicon dioxide',why:'A very high melting point with no conduction at all: a giant network of covalent bonds, with no ions or delocalised electrons.'},
+  {id:'S',d:[['Melting point','−7 °C'],['Boiling point','59 °C'],['Conducts when liquid','no'],['Soluble in water','slightly']],a:3,who:'bromine',why:'Low melting and boiling points: only weak forces between molecules need to be overcome.'},
+  {id:'T',d:[['Melting point','about 3650 °C'],['Conducts as a solid','yes'],['Feel','soft, slippery'],['Soluble in water','no']],a:2,who:'graphite',why:'It conducts, but it is soft and slippery and has an extremely high melting point: a giant covalent layered structure with delocalised electrons. The exception that catches people out.'},
+  {id:'U',d:[['Melting point','98 °C'],['Conducts as a solid','yes'],['Conducts when molten','yes'],['Reacts with water','yes']],a:1,who:'sodium',why:'It conducts as a solid, so it must be metallic, even though its melting point is low. Na⁺ has only one delocalised electron per atom, so its metallic bonding is weak.'}
+];
+const STYPES=['Ionic','Metallic','Macromolecular','Molecular'];
+const SS={ans:{}};
+function renderSort(){ const host=$('#sortCards'); host.innerHTML='';
+  SORT.forEach((it,n)=>{ const d=document.createElement('div'), done=n in SS.ans; d.className='card'+(done?(SS.ans[n]===it.a?' right':' wrong'):'');
+    d.innerHTML=`<h3>Substance ${it.id}${done?` · ${it.who}`:''}</h3><dl>${it.d.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl><div class="choices" style="grid-template-columns:repeat(2,minmax(0,1fr))">${STYPES.map((t,i)=>`<button data-i="${i}"${done?' disabled':''} class="${done&&i===it.a?'right':done&&i===SS.ans[n]?'wrong':''}">${t}</button>`).join('')}</div>${done?`<p class="why"><b>${SS.ans[n]===it.a?'Correct.':'Not quite.'}</b> ${it.why}</p>`:''}`;
+    d.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ SS.ans[n]=+b.dataset.i; renderSort(); }));
+    host.appendChild(d); });
+  const r=Object.keys(SS.ans).filter(k=>SS.ans[k]===SORT[k].a).length; $('#sortScore').textContent=`${r} / ${SORT.length}`;
+  if(Object.keys(SS.ans).length===SORT.length){ const sum=$('#sortSum'); sum.hidden=false;
+    sum.innerHTML=`<table class="cmp"><thead><tr><th></th><th>Ionic</th><th>Metallic</th><th>Macromolecular</th><th>Molecular</th></tr></thead><tbody>
+      <tr><th>Particles</th><td>Positive and negative ions</td><td>Positive ions and delocalised electrons</td><td>Atoms joined in a giant network</td><td>Small molecules</td></tr>
+      <tr><th>Overcome on melting</th><td>Strong electrostatic attraction between ions</td><td>Attraction between ions and delocalised electrons</td><td>Strong covalent bonds</td><td>Weak forces between molecules</td></tr>
+      <tr><th>Melting point</th><td>High</td><td>Usually high</td><td>Very high</td><td>Low</td></tr>
+      <tr><th>Conducts?</th><td>Only when molten or dissolved</td><td>Yes, solid and liquid</td><td>No (graphite: yes)</td><td>No</td></tr>
+      <tr><th>Named examples</th><td>Sodium chloride</td><td>Magnesium</td><td>Diamond, graphite</td><td>Iodine, ice</td></tr></tbody></table>`; } }
+renderSort();
+pickSt('nacl');
+/* ================= STATION 3: shapes (VSEPR) ================= */
+const GROUP={H:1,Be:2,B:3,Al:3,C:4,Si:4,Sn:4,N:5,P:5,As:5,O:6,S:6,Se:6,F:7,Cl:7,Br:7,I:7,Xe:8};
+const EN={H:2.1,Li:1.0,Be:1.5,B:2.0,C:2.5,N:3.0,O:3.5,F:4.0,Na:0.9,Mg:1.2,Al:1.5,Si:1.8,P:2.1,S:2.5,Cl:3.0,K:0.8,Ca:1.0,Br:2.8,I:2.5,Xe:2.6,Se:2.4,Sn:1.8};
+const ELC={Na:'--el-na',Mg:'--el-mg',H:'--el-h',B:'--el-b',Be:'--el-be',Al:'--el-al',C:'--el-c',Si:'--el-si',N:'--el-n',P:'--el-p',O:'--el-o',S:'--el-s',Se:'--el-se',F:'--el-f',Cl:'--el-cl',Br:'--el-br',I:'--el-i',Xe:'--el-xe',Sn:'--el-al'};
+const SHAPES={'2,0':['linear','180°'],'3,0':['trigonal planar','120°'],'3,1':['bent','about 118°'],'4,0':['tetrahedral','109.5°'],'4,1':['trigonal pyramidal','107°'],'4,2':['bent','104.5°'],
+  '5,0':['trigonal bipyramidal','90° and 120°'],'5,1':['seesaw','less than 90° and less than 120°'],'5,2':['T-shaped','less than 90°'],'5,3':['linear','180°'],
+  '6,0':['octahedral','90°'],'6,1':['square pyramidal','less than 90°'],'6,2':['square planar','90°']};
+const REASON={'2,0':'Two pairs get as far apart as possible on opposite sides.','3,0':'Three bonding pairs repel equally and spread out in a flat triangle.','3,1':'Three pairs in a triangle; the lone pair repels more and squeezes the two bonds together slightly.',
+  '4,0':'Four bonding pairs repel equally and point to the corners of a tetrahedron.','4,1':'Four pairs in a tetrahedral arrangement; the lone pair repels more than a bonding pair, so the angle closes from 109.5° to 107°.',
+  '4,2':'Four pairs in a tetrahedral arrangement; two lone pairs repel most strongly, closing the angle to 104.5°.','5,0':'Five bonding pairs: three around the middle at 120° and two above and below at 90°.',
+  '5,1':'Five pairs; the lone pair sits in the middle plane where it has most room, and pushes the bonds closer together.','5,2':'Five pairs; both lone pairs sit in the middle plane, leaving three bonds in a T. They push the bonds below 90°.',
+  '5,3':'Five pairs; three lone pairs fill the middle plane, so the two bonds point opposite ways.','6,0':'Six bonding pairs point to the corners of an octahedron, all at 90°.',
+  '6,1':'Six pairs; one lone pair takes one corner and pushes the four bonds below it slightly upward, under 90°.','6,2':'Six pairs; the two lone pairs sit opposite each other to be as far apart as possible, leaving a flat square.'};
+// species: c=central, o=outer (string or array), q=charge, dbl=double-bonded outer atoms
+const SPECIES=[
+  {f:'BeF2',c:'Be',o:'F',n:2},{f:'CO2',c:'C',o:'O',n:2,dbl:true},
+  {f:'BF3',c:'B',o:'F',n:3},{f:'AlCl3',c:'Al',o:'Cl',n:3},{f:'SO2',c:'S',o:'O',n:2,dbl:true},
+  {f:'CH4',c:'C',o:'H',n:4},{f:'NH4',c:'N',o:'H',n:4,q:1},{f:'AlCl4',c:'Al',o:'Cl',n:4,q:-1},{f:'SiF4',c:'Si',o:'F',n:4},
+  {f:'NH3',c:'N',o:'H',n:3},{f:'H3O',c:'O',o:'H',n:3,q:1},{f:'PCl3',c:'P',o:'Cl',n:3},
+  {f:'H2O',c:'O',o:'H',n:2},{f:'SCl2',c:'S',o:'Cl',n:2},
+  {f:'PCl5',c:'P',o:'Cl',n:5},{f:'SF4',c:'S',o:'F',n:4},{f:'ClF3',c:'Cl',o:'F',n:3},{f:'I3',c:'I',o:'I',n:2,q:-1},
+  {f:'SF6',c:'S',o:'F',n:6},{f:'PF6',c:'P',o:'F',n:6,q:-1},{f:'BrF5',c:'Br',o:'F',n:5},{f:'ClF5',c:'Cl',o:'F',n:5},{f:'XeF4',c:'Xe',o:'F',n:4},{f:'BrF4',c:'Br',o:'F',n:4,q:-1}
+];
+function fname(sp){ return sub(sp.f)+chg(sp.q||0); }
+function count(sp){ const g=GROUP[sp.c], add=sp.dbl?0:sp.n, q=sp.q||0, tot=g+add-q, pairs=tot/2; return {g,add,q,tot,pairs,lp:pairs-sp.n}; }
+const V=(x,y,z)=>{ const l=Math.hypot(x,y,z); return [x/l,y/l,z/l]; };
+const D2R=Math.PI/180;
+function geom(pairs,lp){ const b=[],l=[];
+  const k=pairs+','+lp;
+  if(k==='2,0'){ b.push(V(1,0,0),V(-1,0,0)); return {b,l,arcs:[[0,1]]}; }
+  if(k==='3,0'){ [90,210,330].forEach(a=>b.push(V(Math.cos(a*D2R),Math.sin(a*D2R),0))); return {b,l,arcs:[[1,2]]}; }
+  if(k==='3,1'){ l.push(V(0,1,0)); [211,329].forEach(a=>b.push(V(Math.cos(a*D2R),Math.sin(a*D2R),0))); return {b,l,arcs:[[0,1]]}; }
+  if(k==='4,0'){ b.push(V(0,1,0)); [90,210,330].forEach(a=>b.push(V(Math.sqrt(8)/3*Math.cos(a*D2R),-1/3,Math.sqrt(8)/3*Math.sin(a*D2R)))); return {b,l,arcs:[[0,1]]}; }
+  if(k==='4,1'){ l.push(V(0,1,0)); const c=Math.sqrt((Math.cos(107*D2R)+0.5)/1.5), s=Math.sqrt(1-c*c); [90,210,330].forEach(a=>b.push(V(s*Math.cos(a*D2R),-c,s*Math.sin(a*D2R)))); return {b,l,arcs:[[1,2]]}; }
+  if(k==='4,2'){ const h=52.25*D2R, m=57.5*D2R; b.push(V(-Math.sin(h),-Math.cos(h),0),V(Math.sin(h),-Math.cos(h),0)); l.push(V(0,Math.cos(m),Math.sin(m)),V(0,Math.cos(m),-Math.sin(m))); return {b,l,arcs:[[0,1]]}; }
+  if(k==='4,3'){ b.push(V(0,-1,0)); [90,210,330].forEach(a=>l.push(V(Math.sqrt(8)/3*Math.cos(a*D2R),1/3,Math.sqrt(8)/3*Math.sin(a*D2R)))); return {b,l,arcs:[]}; }
+  if(k==='5,0'){ b.push(V(0,1,0),V(0,-1,0)); [90,210,330].forEach(a=>b.push(V(Math.cos(a*D2R),0,Math.sin(a*D2R)))); return {b,l,arcs:[[0,2],[3,4]]}; }
+  if(k==='5,1'){ l.push(V(0,0,1)); const t=4*D2R; b.push(V(0,Math.cos(t),-Math.sin(t)),V(0,-Math.cos(t),-Math.sin(t))); const e=51*D2R; b.push(V(Math.sin(e),0,-Math.cos(e)),V(-Math.sin(e),0,-Math.cos(e))); return {b,l,arcs:[[0,2],[2,3]]}; }
+  if(k==='5,2'){ b.push(V(Math.cos(87.5*D2R),Math.sin(87.5*D2R),0),V(Math.cos(87.5*D2R),-Math.sin(87.5*D2R),0),V(1,0,0)); l.push(V(-0.5,0,0.866),V(-0.5,0,-0.866)); return {b,l,arcs:[[0,2]]}; }
+  if(k==='5,3'){ b.push(V(0,1,0),V(0,-1,0)); [0,120,240].forEach(a=>l.push(V(Math.cos(a*D2R),0,Math.sin(a*D2R)))); return {b,l,arcs:[[0,1]]}; }
+  if(k==='6,0'){ b.push(V(0,1,0),V(1,0,0),V(-1,0,0),V(0,0,1),V(0,0,-1),V(0,-1,0)); return {b,l,arcs:[[0,1]]}; }
+  if(k==='6,1'){ l.push(V(0,-1,0)); b.push(V(0,1,0)); const e=84.8*D2R; [0,90,180,270].forEach(a=>b.push(V(Math.sin(e)*Math.cos(a*D2R),Math.cos(e),Math.sin(e)*Math.sin(a*D2R)))); return {b,l,arcs:[[0,1]]}; }
+  if(k==='6,2'){ l.push(V(0,1,0),V(0,-1,0)); b.push(V(1,0,0),V(0,0,1),V(-1,0,0),V(0,0,-1)); return {b,l,arcs:[[0,1]]}; }
+  return null; }
+function angLabel(sp,k,arcIdx){ if(sp.ang&&k==='3,1') return sp.ang;
+  const m={'5,0':['90°','120°'],'5,1':['less than 90°','less than 120°'],'6,1':['less than 90°'],'5,2':['less than 90°']}; if(m[k]) return m[k][arcIdx]; return SHAPES[k][1]; }
+function molFor(sp){ const C=count(sp), k=C.pairs+','+C.lp, G=geom(C.pairs,C.lp); if(!G) return null; const outs=Array.isArray(sp.o)?sp.o:Array(sp.n).fill(sp.o);
+  return {c:sp.c,atoms:G.b.map((v,i)=>({el:outs[i],v})),lps:G.l,arcs:G.arcs.map(([i,j],n)=>[i,j,angLabel(sp,k,n)]),key:k,C}; }
+
+/* ---------- 3D renderer (shared with station 4) ---------- */
+function luminance(hex){ const m=/^#?([0-9a-f]{6})$/i.exec(hex); if(!m) return 0.5; const n=parseInt(m[1],16); return (0.299*(n>>16&255)+0.587*(n>>8&255)+0.114*(n&255))/255; }
+function drawMol(cv,ctx,M,view,opt={}){
+  if(!sizeCv(cv)) return; const W=cv.width,H=cv.height,c=ctx; c.setTransform(1,0,0,1,0,0); c.clearRect(0,0,W,H); if(!M) return;
+  const sc=Math.min(W,H)*0.33, F=4.2, cy=Math.cos(view.yaw), sy=Math.sin(view.yaw), cp=Math.cos(view.pitch), sp=Math.sin(view.pitch);
+  const P=([x,y,z])=>{ const x1=x*cy+z*sy, z1=-x*sy+z*cy, y2=y*cp-z1*sp, z2=y*sp+z1*cp, p=F/(F+z2); return {x:W/2+x1*sc*p,y:H/2-y2*sc*p,z:z2,p}; };
+  const unit=Math.min(W,H)/400, ink=tok('--ink'), muted=tok('--muted'), da=tok('--da'), share=tok('--share'), surf=tok('--surface-2');
+  const items=[]; const cen=P([0,0,0]);
+  M.atoms.forEach((a,i)=>{ const q=P(a.v); items.push({k:'b',i,z:(q.z+cen.z)/2-0.001,q}); items.push({k:'a',i,z:q.z,q}); });
+  if(opt.lp!==false) M.lps.forEach((v,i)=>items.push({k:'l',v,z:P(v.map(x=>x*0.5)).z}));
+  items.push({k:'c',z:cen.z});
+  items.sort((a,b)=>b.z-a.z);
+  const fade=z=>Math.max(0.5,Math.min(1,0.78-0.32*z));
+  const sphere=(x,y,r,col,lab)=>{ const a0=c.globalAlpha; c.fillStyle=col; c.beginPath(); c.arc(x,y,r,0,6.3); c.fill();
+    const g=c.createRadialGradient(x-r*.4,y-r*.45,0,x-r*.4,y-r*.45,r*.75); g.addColorStop(0,'rgba(255,255,255,0.42)'); g.addColorStop(1,'rgba(255,255,255,0)'); c.fillStyle=g; c.beginPath(); c.arc(x,y,r,0,6.3); c.fill();
+    const sh=c.createRadialGradient(x+r*.3,y+r*.35,r*.2,x,y,r); sh.addColorStop(0,'rgba(0,0,0,0)'); sh.addColorStop(1,'rgba(0,0,0,0.18)'); c.fillStyle=sh; c.beginPath(); c.arc(x,y,r,0,6.3); c.fill();
+    c.strokeStyle=ink; c.globalAlpha=a0*0.4; c.lineWidth=1.2*unit; c.stroke(); c.globalAlpha=a0;
+    if(lab){ const dark=luminance(col)<0.6; c.font=`800 ${Math.max(11,r*0.8)}px "Bricolage Grotesque", system-ui, sans-serif`; c.textAlign='center'; c.textBaseline='middle'; c.lineJoin='round';
+      c.lineWidth=3*unit; c.strokeStyle=dark?'rgba(0,0,0,0.45)':'rgba(255,255,255,0.8)'; c.strokeText(lab,x,y+r*0.04); c.fillStyle=dark?'#ffffff':'#17201c'; c.fillText(lab,x,y+r*0.04); } };
+  for(const it of items){ c.globalAlpha=fade(it.z);
+    if(it.k==='b'){ c.strokeStyle=muted; c.lineWidth=7*unit*it.q.p; c.lineCap='round'; c.beginPath(); c.moveTo(cen.x,cen.y); c.lineTo(it.q.x,it.q.y); c.stroke(); }
+    else if(it.k==='a'){ const a=M.atoms[it.i], r=(a.el==='H'?0.17:0.25)*sc*it.q.p; sphere(it.q.x,it.q.y,r,tok(ELC[a.el]||'--el-c'),a.el); }
+    else if(it.k==='c'){ sphere(cen.x,cen.y,0.32*sc*cen.p,tok(ELC[M.c]||'--el-c'),M.c); }
+    else if(it.k==='l'){ const a=P(it.v.map(x=>x*0.2)), b=P(it.v.map(x=>x*0.82)), mx=(a.x+b.x)/2, my=(a.y+b.y)/2, dx=b.x-a.x, dy=b.y-a.y, L=Math.hypot(dx,dy), rx=Math.max(0.17*sc,L/2), ry=0.17*sc, an=Math.atan2(dy,dx);
+      c.globalAlpha=0.32; c.fillStyle=da; c.beginPath(); c.ellipse(mx,my,rx,ry,an,0,6.3); c.fill(); c.globalAlpha=0.75; c.strokeStyle=da; c.lineWidth=1.5*unit; c.stroke();
+      c.globalAlpha=1; c.fillStyle=da; const ex=mx+Math.cos(an)*rx*0.25, ey=my+Math.sin(an)*rx*0.25, px=-Math.sin(an)*ry*0.38, py=Math.cos(an)*ry*0.38; [[1],[-1]].forEach(([s])=>{ c.beginPath(); c.arc(ex+px*s,ey+py*s,3.2*unit,0,6.3); c.fill(); }); } }
+  c.globalAlpha=1;
+  if(opt.arcs!==false) M.arcs.forEach(([i,j,lab],n)=>{ const a=M.atoms[i].v, b=M.atoms[j].v, dot=a[0]*b[0]+a[1]*b[1]+a[2]*b[2], th=Math.acos(Math.max(-1,Math.min(1,dot)));
+    let perp; if(th>3.1){ perp=Math.abs(a[1])<0.9?[0,1,0]:[0,0,1]; } const pts=[]; for(let s=0;s<=24;s++){ const t=s/24; let v;
+      if(th>3.1){ const ang=t*Math.PI; v=a.map((x,k)=>x*Math.cos(ang)+perp[k]*Math.sin(ang)); } else { const s1=Math.sin((1-t)*th)/Math.sin(th), s2=Math.sin(t*th)/Math.sin(th); v=a.map((x,k)=>x*s1+b[k]*s2); }
+      pts.push(P(v.map(x=>x*0.48))); }
+    c.strokeStyle=share; c.lineWidth=2.6*unit; c.beginPath(); pts.forEach((q,k)=>k?c.lineTo(q.x,q.y):c.moveTo(q.x,q.y)); c.stroke();
+    const m=pts[12], tx=m.x+(m.x-cen.x)*0.62, ty=m.y+(m.y-cen.y)*0.62; c.font=`700 ${Math.max(11,13*unit)}px "JetBrains Mono", monospace`; const w=c.measureText(lab).width;
+    c.fillStyle=surf; c.globalAlpha=0.9; c.fillRect(tx-w/2-4*unit,ty-9*unit,w+8*unit,18*unit); c.globalAlpha=1; c.fillStyle=ink; c.textAlign='center'; c.textBaseline='middle'; c.fillText(lab,tx,ty); });
+  if(opt.dip){ const d=opt.dip; const arrow=(x1,y1,x2,y2,col,w)=>{ const an=Math.atan2(y2-y1,x2-x1), h=10*unit+w; c.strokeStyle=col; c.fillStyle=col; c.lineWidth=w; c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2-Math.cos(an)*h*0.6,y2-Math.sin(an)*h*0.6); c.stroke(); c.beginPath(); c.moveTo(x2,y2); c.lineTo(x2-Math.cos(an-0.45)*h,y2-Math.sin(an-0.45)*h); c.lineTo(x2-Math.cos(an+0.45)*h,y2-Math.sin(an+0.45)*h); c.closePath(); c.fill();
+      const tx=x1-Math.cos(an)*0, ty=y1; c.beginPath(); c.moveTo(tx-Math.sin(an)*6*unit,ty+Math.cos(an)*6*unit); c.lineTo(tx+Math.sin(an)*6*unit,ty-Math.cos(an)*6*unit); c.stroke(); };
+    d.bonds.forEach(bd=>{ if(Math.abs(bd.m)<0.05) return; const v=M.atoms[bd.i].v, off=[0,0,0]; const toOut=bd.m>0; const s0=toOut?0.38:0.72, s1=toOut?0.72:0.38; const A=P(v.map(x=>x*s0)), B=P(v.map(x=>x*s1)); const nx=-(B.y-A.y), ny=(B.x-A.x), nl=Math.hypot(nx,ny)||1, o=9*unit;
+      c.globalAlpha=0.95; arrow(A.x+nx/nl*o,A.y+ny/nl*o,B.x+nx/nl*o,B.y+ny/nl*o,tok('--xa'),2.6*unit); });
+    if(d.R>0.05){ const r=d.Rv, L=Math.hypot(...r), u=r.map(x=>x/L), len=0.35+0.45*Math.min(1,L/1.6); const A=P([0,0,0]), B=P(u.map(x=>x*len)); c.globalAlpha=1; arrow(A.x,A.y,B.x,B.y,tok('--bad'),5*unit); } }
+  c.globalAlpha=1;
+}
+function attachRotate(cv,view){ cv.addEventListener('pointerdown',e=>{ view.drag={x:e.clientX,y:e.clientY}; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove',e=>{ if(!view.drag) return; view.yaw+=(e.clientX-view.drag.x)*0.012; view.pitch=Math.max(-1.4,Math.min(1.4,view.pitch+(e.clientY-view.drag.y)*0.012)); view.drag={x:e.clientX,y:e.clientY}; });
+  const end=()=>{ view.drag=null; }; cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end); }
+
+/* ---------- station 3 state ---------- */
+const SH={mode:'explore',sp:SPECIES.find(s=>s.f==='NH3'),M:null,view:{yaw:0.5,pitch:0.32,drag:null},spin:!reduceMotion,found:{},hidden:false,pr:null,score:0,tries:0,checked:false};
+const shc=$('#shCanvas'), shx=shc.getContext('2d'); attachRotate(shc,SH.view); $('#shSpin').checked=SH.spin;
+const PAIRS_LBL={2:'2 electron pairs',3:'3 electron pairs',4:'4 electron pairs',5:'5 electron pairs',6:'6 electron pairs'};
+function exploreChips(){ const groups={}; SPECIES.forEach(s=>{ const p=count(s).pairs; (groups[p]=groups[p]||[]).push(s); });
+  $('#shExplore').innerHTML=`<h2>Pick a molecule or ion</h2>`+Object.keys(groups).map(p=>`<div class="grouplbl">${PAIRS_LBL[p]}</div><div class="chips sm">${groups[p].map(s=>`<button class="chip" data-f="${s.f}${s.q||''}" aria-pressed="${s===SH.sp}">${fname(s)}</button>`).join('')}</div>`).join('');
+  $('#shExplore').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ const s=SPECIES.find(x=>x.f+(x.q||'')===b.dataset.f); showSpecies(s); exploreChips(); })); }
+function stepsHTML(sp,upto=9){ const C=count(sp), k=C.pairs+','+C.lp, [shape]=SHAPES[k]||['?'], ang=angLabel(sp,k,0)+(k==='5,0'||k==='5,1'?` and ${angLabel(sp,k,1)}`:'');
+  const outs=sp.dbl?`${sp.n} O atoms with double bonds add 0 (each double bond counts as one bonding region)`:`${sp.n} ${sp.o} atoms each add 1: + ${sp.n}`;
+  const st=[[`Central atom: ${sp.c}`,`${sp.c} is in group ${C.g<3?C.g:C.g+10}, so it has ${C.g} outer electrons`],['Bonded atoms',outs],['Charge',C.q?`${C.q<0?'Add':'Subtract'} ${Math.abs(C.q)} for the ${C.q<0?'negative':'positive'} charge`:'No charge: nothing to add or take away'],
+    ['Electron pairs',`${C.g} + ${C.add}${C.q?` ${C.q<0?'+':'−'} ${Math.abs(C.q)}`:''} = ${C.tot} electrons; ${C.tot} ÷ 2 = ${C.pairs} pairs`],['Bonding and lone pairs',`${sp.n} bonding ${sp.dbl?'regions':'pairs'} (one per bonded atom), so ${C.lp} lone pair${C.lp===1?'':'s'}`],
+    [`Shape: ${shape}, ${ang}`,REASON[k]||'']];
+  return st.slice(0,upto).map(([h,m])=>`<li><span class="sh">${h}</span><span class="sm">${m}</span></li>`).join(''); }
+function resTiles(sp,hide){ const C=count(sp), k=C.pairs+','+C.lp, [shape]=SHAPES[k], ang=angLabel(sp,k,0)+(k==='5,0'||k==='5,1'?` and ${angLabel(sp,k,1)}`:'');
+  const rows=[['Shape',shape],['Bond angle',ang],[sp.dbl?'Bonding regions':'Bonding pairs',sp.n],['Lone pairs',C.lp]];
+  $('#shRes').innerHTML=rows.map(([l,v],i)=>`<div class="result${i<2?' hl':''}"><span class="rl">${l}</span><span class="rv">${hide?'?':v}</span></div>`).join(''); }
+function markFound(k){ if(!SHAPES[k]) return; SH.found[k]=1; drawMap(); }
+function showSpecies(sp,opts={}){ SH.sp=sp; SH.M=molFor(sp); $('#shF').textContent=fname(sp); const hide=!!opts.hide; SH.hidden=hide; $('#shCover').hidden=!hide;
+  resTiles(sp,hide); $('#shSteps').innerHTML=hide?'<li><span class="sh">Your turn</span><span class="sm">Count the electrons on paper: group number + one per bonded atom, adjust for charge, then divide by 2.</span></li>':stepsHTML(sp);
+  if(!hide) markFound(SH.M.key); }
+function drawMap(){ const host=$('#shMap'); let h='<span></span>'+[0,1,2,3].map(l=>`<span class="gh">${l} lone pair${l===1?'':'s'}</span>`).join('');
+  for(let p=2;p<=6;p++){ h+=`<span class="gr">${p} pairs</span>`; for(let l=0;l<=3;l++){ const k=p+','+l; if(!SHAPES[k]){ h+='<span class="na" aria-hidden="true"></span>'; continue; }
+    const f=SH.found[k]; h+=f?`<button class="found" data-k="${k}">${SHAPES[k][0]}<span>${SHAPES[k][1]}</span></button>`:`<button data-k="${k}" aria-label="Not found yet">?</button>`; } }
+  host.innerHTML=h; $('#mapScore').textContent=`${Object.keys(SH.found).length} / 13`;
+  host.querySelectorAll('button.found').forEach(b=>b.addEventListener('click',()=>{ const hit=x=>{ const C=count(x); return C.pairs+','+C.lp===b.dataset.k; }; const s=SPECIES.find(x=>hit(x)&&!x.dbl)||SPECIES.find(hit); if(s){ setMode('explore'); showSpecies(s); exploreChips(); } })); }
+function setMode(m){ SH.mode=m; setPressed($('#shMode'),$(`#shMode button[data-m="${m}"]`)); $('#shExplore').hidden=m!=='explore'; $('#shBuild').hidden=m!=='build'; $('#shPractice').hidden=m!=='practice'; $('#shPill').textContent={explore:'Explore',build:'Build your own',practice:'Practice'}[m];
+  if(m==='practice') newPractice(); else { $('#shCover').hidden=true; if(m==='explore'){ showSpecies(SH.sp.custom?SPECIES[9]:SH.sp); exploreChips(); } } }
+$('#shMode').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.m)));
+$('#shSpin').addEventListener('change',e=>{ SH.spin=e.target.checked; });
+/* build your own */
+const BC=['Be','B','Al','C','Si','N','P','O','S','Se','Cl','Br','I','Xe'], BO=['H','F','Cl','Br','I'];
+$('#bdC').innerHTML=BC.map(e=>`<option${e==='S'?' selected':''}>${e}</option>`).join(''); $('#bdO').innerHTML=BO.map(e=>`<option${e==='F'?' selected':''}>${e}</option>`).join(''); $('#bdN').innerHTML=[2,3,4,5,6].map(n=>`<option${n===4?' selected':''}>${n}</option>`).join('');
+$('#bdGo').addEventListener('click',()=>{ const c=$('#bdC').value, o=$('#bdO').value, n=+$('#bdN').value, q=+$('#bdQ').value, msg=$('#bdMsg');
+  const sp={f:c+(o+(n>1?n:'')),c,o,n,q,custom:true}; sp.f=c+o+n; const C=count(sp);
+  if(C.tot%2){ msg.className='msg bad'; msg.textContent=`${C.g} + ${n}${q?(q<0?' + 1':' − 1'):''} = ${C.tot} electrons: an odd number, so this would be a radical. Change the charge or the number of atoms.`; return; }
+  if(C.lp<0){ msg.className='msg bad'; msg.textContent=`Only ${C.pairs} electron pairs: not enough for ${n} bonds.`; return; }
+  if(C.pairs>6){ msg.className='msg bad'; msg.textContent=`${C.pairs} electron pairs: more than six is beyond the specification.`; return; }
+  if(!SHAPES[C.pairs+','+C.lp]){ msg.className='msg bad'; msg.textContent=`${C.pairs} pairs with ${C.lp} lone pairs is not one of the shapes you need.`; return; }
+  msg.className='msg good'; msg.textContent=`${fname(sp)}: ${SHAPES[C.pairs+','+C.lp][0]}. Real compounds may not exist for every combination you build.`; showSpecies(sp); });
+/* practice */
+const SHAPE_OPTS=['linear','trigonal planar','bent','tetrahedral','trigonal pyramidal','trigonal bipyramidal','seesaw','T-shaped','octahedral','square pyramidal','square planar'];
+const ANG_OPTS=['180°','120°','about 118°','109.5°','107°','104.5°','90° and 120°','less than 90° and less than 120°','less than 90°','90°'];
+const fill=(sel,arr)=>{ sel.innerHTML='<option value="">Choose…</option>'+arr.map(v=>`<option>${v}</option>`).join(''); };
+fill($('#prPairs'),[2,3,4,5,6]); fill($('#prLp'),[0,1,2,3]); fill($('#prShape'),SHAPE_OPTS); fill($('#prAng'),ANG_OPTS);
+const POOL=SPECIES.filter(s=>!s.dbl);
+function newPractice(){ let s; do{ s=pick(POOL); } while(SH.pr&&s===SH.pr&&POOL.length>1); SH.pr=s; SH.checked=false; ['#prPairs','#prLp','#prShape','#prAng'].forEach(x=>{ $(x).value=''; });
+  $('#prQ').textContent=`What shape is ${fname(s)}?`; $('#prOut').hidden=true; showSpecies(s,{hide:true}); }
+$('#prNext').addEventListener('click',newPractice);
+$('#prHint').addEventListener('click',()=>{ if(!SH.pr) return; $('#shSteps').innerHTML=stepsHTML(SH.pr,4); });
+$('#prCheck').addEventListener('click',()=>{ const s=SH.pr; if(!s) return; const C=count(s), k=C.pairs+','+C.lp, [shape]=SHAPES[k], ang=SHAPES[k][1];
+  const ans={p:$('#prPairs').value,l:$('#prLp').value,s:$('#prShape').value,a:$('#prAng').value}; const out=$('#prOut'); out.hidden=false;
+  if(!ans.p||!ans.l||!ans.s||!ans.a){ out.className='verdict'; out.innerHTML='<span class="small">Answer all four before you check.</span>'; return; }
+  const ok={p:+ans.p===C.pairs,l:+ans.l===C.lp,s:ans.s===shape,a:ans.a===ang}; const all=ok.p&&ok.l&&ok.s&&ok.a;
+  if(!SH.checked){ SH.tries++; if(all) SH.score++; SH.checked=true; $('#prScore').textContent=`${SH.score} / ${SH.tries}`; }
+  const line=(lab,good,right)=>`<span class="small">${good?'✓':'✗'} ${lab}: ${right}</span>`;
+  out.className='verdict '+(all?'good':'bad'); out.innerHTML=`<strong>${all?'All correct':'Check the working'}</strong>${line('Electron pairs',ok.p,C.pairs)}${line('Lone pairs',ok.l,C.lp)}${line('Shape',ok.s,shape)}${line('Bond angle',ok.a,ang)}`;
+  showSpecies(s); });
+exploreChips(); showSpecies(SH.sp); drawMap();
+LOOPS.shapes={tick(dt){ if(SH.spin&&!SH.view.drag) SH.view.yaw+=dt*0.45; drawMol(shc,shx,SH.hidden?null:SH.M,SH.view,{lp:$('#shLp').checked,arcs:$('#shAng').checked}); }};
+/* ================= STATION 4: polarity ================= */
+const ENL=['H','B','C','N','O','F','Na','Mg','Al','Si','P','S','Cl','Br','I'], METAL=new Set(['Na','Mg','Al']);
+const BP={a:'H',b:'Cl'};
+function enChips(id,key){ $(id).innerHTML=ENL.map(e=>`<button class="chip" data-e="${e}" aria-pressed="${BP[key]===e}">${e} <span class="small">${EN[e].toFixed(1)}</span></button>`).join('');
+  $(id).querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ BP[key]=b.dataset.e; enChips(id,key); bpDraw(); })); }
+function bpDraw(){ const svg=$('#bpSvg'); svg.innerHTML=''; const A=BP.a, B=BP.b, d=EN[B]-EN[A], ad=Math.abs(d);
+  const defs=el('defs',{},svg); const lg=el('linearGradient',{id:'bpG',x1:0,x2:1,y1:0,y2:0},defs);
+  const lo=0.6-0.48*Math.min(1,ad/1.8); el('stop',{offset:'0','stop-color':'var(--da)','stop-opacity':d>=0?lo:0.6},lg); el('stop',{offset:'1','stop-color':'var(--da)','stop-opacity':d>=0?0.6:lo},lg);
+  const xa=150, xb=370, y=92, bothMetal=METAL.has(A)&&METAL.has(B), ionic=!bothMetal&&ad>=1.8&&(METAL.has(A)||METAL.has(B));
+  let cap='';
+  if(bothMetal){ cap=`${A} and ${B} are both metals: they form metallic bonding, not a covalent bond.`; }
+  else if(ionic){ const m=EN[A]<EN[B]?A:B, n=m===A?B:A; [[xa,A],[xb,B]].forEach(([x,e])=>{ el('circle',{cx:x,cy:y,r:e===m?26:36,fill:`var(${ELC[e]||'--el-c'})`,opacity:.9},svg); el('text',{x,y:y+6,'text-anchor':'middle',class:'s-onfill','font-size':18},svg,e); el('text',{x:x+(e===m?30:40),y:y-26,class:'s-sym','font-size':18},svg,e===m?'+':'−'); });
+    el('text',{x:260,y:y+6,'text-anchor':'middle',class:'s-mut'},svg,'electron transferred');
+    cap=`${A} ${EN[A].toFixed(1)}, ${B} ${EN[B].toFixed(1)}: difference ${ad.toFixed(1)}. The difference is so large that the electron is effectively transferred: ${m} forms a positive ion and ${n} a negative ion. The bonding is ionic.`; }
+  else { el('ellipse',{cx:260,cy:y,rx:170,ry:58,fill:'url(#bpG)'},svg);
+    const ex=260+Math.max(-1,Math.min(1,d/1.8))*70; el('circle',{cx:ex-8,cy:y,r:5,class:'d-b'},svg); el('circle',{cx:ex+8,cy:y,r:5,class:'d-b'},svg);
+    [[xa,A],[xb,B]].forEach(([x,e])=>{ el('circle',{cx:x,cy:y,r:30,fill:`var(${ELC[e]||'--el-c'})`},svg); el('text',{x,y:y+7,'text-anchor':'middle',class:luminance(tok(ELC[e]||'--el-c'))>0.55?'s-sym':'s-onfill','font-size':20},svg,e); });
+    if(ad>=0.05){ const neg=d>0?xb:xa, pos=d>0?xa:xb; el('text',{x:neg,y:y-44,'text-anchor':'middle',class:'dlt','font-size':20},svg,'δ−'); el('text',{x:pos,y:y-44,'text-anchor':'middle',class:'dlt pos','font-size':20},svg,'δ+'); }
+    const more=d>0?B:A;
+    cap=ad<0.05?`${A} ${EN[A].toFixed(1)}, ${B} ${EN[B].toFixed(1)}: no difference, so the pair is shared equally. The bond is non-polar.`:`${A} ${EN[A].toFixed(1)}, ${B} ${EN[B].toFixed(1)}: difference ${ad.toFixed(1)}. ${more} attracts the bonding pair more strongly, so it becomes δ− and the bond is polar.`; }
+  // spectrum
+  const X=v=>40+v/3.2*440; el('rect',{x:40,y:172,width:440,height:12,rx:6,class:'ebar'},svg);
+  el('rect',{x:X(0.4),y:172,width:X(1.8)-X(0.4),height:12,fill:'var(--da)',opacity:.25},svg); el('rect',{x:X(1.8),y:172,width:X(3.2)-X(1.8),height:12,fill:'var(--da)',opacity:.55},svg);
+  [['non-polar',0.2],['polar covalent',1.1],['mostly ionic',2.5]].forEach(([t,v])=>el('text',{x:X(v),y:200,'text-anchor':'middle',class:'s-mut'},svg,t));
+  if(!bothMetal){ el('path',{d:`M${X(Math.min(3.2,ad))} 168l-6 -9h12z`,fill:'var(--ink)'},svg); el('text',{x:X(Math.min(3.2,ad)),y:154,'text-anchor':'middle',class:'s-txt'},svg,'Δ '+ad.toFixed(1)); }
+  $('#bpCap').textContent=cap+(bothMetal?'':' The bands on the scale are only a rough guide.'); }
+enChips('#enA','a'); enChips('#enB','b'); bpDraw();
+
+/* molecular dipoles */
+const POL=[
+  {f:'HCl',c:'Cl',o:['H'],n:1,diat:true},{f:'CO2',c:'C',o:'O',n:2,dbl:true},{f:'SO2',c:'S',o:'O',n:2,dbl:true},{f:'H2O',c:'O',o:'H',n:2},
+  {f:'BF3',c:'B',o:'F',n:3},{f:'NH3',c:'N',o:'H',n:3},{f:'NF3',c:'N',o:'F',n:3},{f:'CH4',c:'C',o:'H',n:4},{f:'CF4',c:'C',o:'F',n:4},{f:'CH3Cl',c:'C',o:['Cl','H','H','H'],n:4},
+  {f:'PCl5',c:'P',o:'Cl',n:5},{f:'SF4',c:'S',o:'F',n:4},{f:'ClF3',c:'Cl',o:'F',n:3},{f:'XeF4',c:'Xe',o:'F',n:4},{f:'SF6',c:'S',o:'F',n:6}];
+const PO={i:0,M:null,view:{yaw:0.6,pitch:0.3,drag:null},answered:false,score:0,tries:0,done:{}};
+const poc=$('#poCanvas'), pox=poc.getContext('2d'); attachRotate(poc,PO.view);
+function polMol(sp){ if(sp.diat) { const g=geom(4,3); return {c:sp.c,atoms:[{el:'H',v:g.b[0]}],lps:g.l,arcs:[],key:'4,3'}; } return molFor(sp); }
+function polDip(sp,M){ const bonds=M.atoms.map((a,i)=>({i,m:EN[a.el]-EN[sp.c]})); const Rv=[0,1,2].map(k=>bonds.reduce((s,b)=>s+b.m*M.atoms[b.i].v[k],0)); return {bonds,Rv,R:Math.hypot(...Rv)}; }
+const pname=sp=>sub(sp.f);
+$('#poPick').innerHTML=POL.map((s,i)=>`<button class="chip" data-i="${i}" aria-pressed="${i===0}">${pname(s)}</button>`).join('');
+$('#poPick').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ setPressed($('#poPick'),b); poSet(+b.dataset.i); }));
+function poSet(i){ PO.i=i; const sp=POL[i]; PO.M=polMol(sp); PO.dip=polDip(sp,PO.M); PO.answered=false; $('#poPolar').disabled=$('#poNon').disabled=false;
+  $('#poOut').className='verdict'; $('#poOut').innerHTML=`<strong>${pname(sp)}</strong><span class="small">${sp.diat?'A diatomic molecule':'Shape: '+SHAPES[PO.M.key][0]}. Is it polar? Decide, then press a button.</span>`; }
+function poAnswer(saysPolar){ if(PO.answered) return; PO.answered=true; const sp=POL[PO.i], polar=PO.dip.R>0.05, ok=saysPolar===polar;
+  if(!PO.done[sp.f]){ PO.done[sp.f]=1; PO.tries++; if(ok) PO.score++; $('#poScore').textContent=`${PO.score} / ${PO.tries}`; }
+  const outs=Array.isArray(sp.o)?[...new Set(sp.o)]:[sp.o]; const bondTxt=outs.map(o=>`${sp.c}–${o} (difference ${Math.abs(EN[o]-EN[sp.c]).toFixed(1)})`).join(' and ');
+  const shape=sp.diat?'':SHAPES[PO.M.key][0]; let why;
+  if(sp.diat) why=`There is only one bond, ${bondTxt}, so its dipole cannot be cancelled: the molecule is polar.`;
+  else if(!polar) why=`The ${bondTxt} bonds are polar, but the ${shape} shape is symmetrical, so the bond dipoles cancel. No permanent dipole.`;
+  else if(outs.length>1) why=`The bonds are different: ${bondTxt}. Their dipoles do not cancel, so the molecule has a permanent dipole.`;
+  else why=`The ${bondTxt} bonds are polar, and ${shape} molecules are not symmetrical (lone pairs take up space on one side), so the dipoles do not cancel. The molecule has a permanent dipole.`;
+  $('#poPolar').disabled=$('#poNon').disabled=true;
+  $('#poOut').className='verdict '+(ok?'good':'bad'); $('#poOut').innerHTML=`<strong>${ok?'Correct':'Not quite'}: ${pname(sp)} is ${polar?'polar':'non-polar'}</strong><span class="small">${why} Teal arrows: bond dipoles (towards δ−). ${polar?'Red arrow: overall dipole.':''}</span>`; }
+$('#poPolar').addEventListener('click',()=>poAnswer(true)); $('#poNon').addEventListener('click',()=>poAnswer(false));
+poSet(0);
+LOOPS.polar={tick(dt){ if($('#poSpin').checked&&!PO.view.drag&&!reduceMotion) PO.view.yaw+=dt*0.4; drawMol(poc,pox,PO.M,PO.view,{arcs:false,dip:PO.answered?PO.dip:null}); }};
+/* ================= STATION 5: forces between molecules ================= */
+const FX=[
+  {f:'Ar',name:'argon',v:1,d:0,h:0,view:'vdw',rx:36,why:'Argon atoms are not polar, so only van der Waals forces act between them.'},
+  {f:'I2',name:'iodine',v:1,d:0,h:0,view:'vdw',rx:58,why:'The I–I bond is non-polar, so only van der Waals forces act. I₂ has 106 electrons, so these forces are strong enough to make iodine a solid at room temperature.'},
+  {f:'C6H14',name:'hexane',v:1,d:0,h:0,view:'vdw',rx:82,why:'C–H bonds are almost non-polar (difference 0.4), so hexane has only van der Waals forces. Its long chains give plenty of surface contact.'},
+  {f:'HCl',name:'hydrogen chloride',v:1,d:1,h:0,view:'pd',rx:52,why:'H–Cl is polar (difference 0.9), so the molecules line up δ+ to δ−. H is not bonded to N, O or F, so there are no hydrogen bonds. Van der Waals forces act too.'},
+  {f:'H2S',name:'hydrogen sulfide',v:1,d:1,h:0,view:'pd',rx:56,why:'S–H bonds are slightly polar and the molecule is bent, so it has a permanent dipole. S is not electronegative enough to hydrogen bond.'},
+  {f:'CH3Cl',name:'chloromethane',v:1,d:1,h:0,view:'pd',rx:66,why:'C–Cl is polar and the dipoles do not cancel. The H atoms are bonded to C, not N, O or F, so there are no hydrogen bonds.'},
+  {f:'CH3COCH3',name:'propanone',v:1,d:1,h:0,view:'pd',rx:84,why:'The C=O bond gives propanone a permanent dipole. It has no O–H bond, so its molecules cannot hydrogen bond to each other.'},
+  {f:'H2O',name:'water',v:1,d:1,h:1,view:'hb',why:'H is bonded to O, and O has two lone pairs: each water molecule can form up to four hydrogen bonds. It is polar too, and van der Waals forces act between all molecules.'},
+  {f:'HF',name:'hydrogen fluoride',v:1,d:1,h:1,view:'hb',why:'H is bonded to F, the most electronegative element, and F has three lone pairs: strong hydrogen bonds.'},
+  {f:'CH3NH2',name:'methylamine',v:1,d:1,h:1,view:'hb',why:'There is an N–H bond and a lone pair on N, so methylamine molecules hydrogen bond to each other.'}
+];
+const HBT={
+  H2O:{X:'O',e:'--el-o',A:{subs:[{el:'H',ang:0},{el:'H',ang:235}],lps:[115,170]},B:{subs:[{el:'H',ang:52},{el:'H',ang:308}],lps:[180,240]}},
+  HF:{X:'F',e:'--el-f',A:{subs:[{el:'H',ang:0}],lps:[120,180,240]},B:{subs:[{el:'H',ang:0}],lps:[180,100,260]}},
+  CH3NH2:{X:'N',e:'--el-n',A:{subs:[{el:'H',ang:0},{el:'H',ang:120},{el:'CH₃',ang:240}],lps:[180]},B:{subs:[{el:'H',ang:60},{el:'H',ang:300},{el:'CH₃',ang:0}],lps:[180]}}
+};
+const FS={i:3,score:0,tries:0,done:{},checked:false,t0:0};
+$('#fxPick').innerHTML=FX.map((x,i)=>`<button class="chip" data-i="${i}" aria-pressed="${i===FS.i}">${sub(x.f)}</button>`).join('');
+$('#fxPick').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ setPressed($('#fxPick'),b); fxSet(+b.dataset.i); }));
+function fxSet(i){ FS.i=i; FS.checked=false; ['#fxV','#fxD','#fxH'].forEach(s=>$(s).checked=false); $('#fxOut').hidden=true; const x=FX[i]; $('#fxF').textContent=sub(x.f); $('#fxPill').textContent='Which forces?';
+  $('#fxCap').textContent=`${x.name[0].toUpperCase()+x.name.slice(1)}. Tick every force that acts between its molecules, then check. The diagram shows the strongest force once you have checked.`; fxDraw(0); }
+$('#fxCheck').addEventListener('click',()=>{ const x=FX[FS.i], v=$('#fxV').checked, d=$('#fxD').checked, h=$('#fxH').checked;
+  const ok=v===!!x.v&&h===!!x.h&&(x.h?true:d===!!x.d);
+  if(!FS.done[x.f]){ FS.done[x.f]=1; FS.tries++; if(ok) FS.score++; $('#fxScore').textContent=`${FS.score} / ${FS.tries}`; }
+  FS.checked=true; const out=$('#fxOut'); out.hidden=false; out.className='verdict '+(ok?'good':'bad');
+  const list=[x.v&&'van der Waals',x.d&&'permanent dipole–dipole',x.h&&'hydrogen bonding'].filter(Boolean).join(', ');
+  out.innerHTML=`<strong>${ok?'Correct':'Not quite'}: ${list}</strong><span class="small">${x.why}${!v?' Remember: van der Waals forces act between all molecules.':''}${x.h&&!d?' Molecules that hydrogen bond are also polar, so permanent dipole–dipole forces act as well.':''}</span>`;
+  $('#fxPill').textContent={vdw:'van der Waals only',pd:'Permanent dipole–dipole',hb:'Hydrogen bonding'}[x.view];
+  fxDraw(performance.now()/1000);
+  $('#fxCap').textContent={vdw:'Temporary dipoles flicker in one molecule and induce dipoles in the next. The attraction between them is the van der Waals force.',pd:'Polar molecules line up so that the δ+ end of one is next to the δ− end of the next: permanent dipole–dipole attraction. Van der Waals forces act as well.',hb:'A hydrogen bond: Hδ+ on one molecule is attracted to a lone pair on a very electronegative atom (N, O or F) in another. The X–H···X arrangement is close to a straight line (180°).'}[x.view]; });
+function fxDraw(t){ const svg=$('#fxSvg'); svg.innerHTML=''; const x=FX[FS.i];
+  if(!FS.checked){ // neutral: two molecules, no forces shown
+    if(x.view==='hb') hbDraw(svg,x,false); else [170,430].forEach(cx=>capsule(svg,cx,150,x,0,false));
+    el('text',{x:300,y:282,'text-anchor':'middle',class:'s-mut'},svg,'Which forces act between these molecules?'); return; }
+  if(x.view==='hb'){ hbDraw(svg,x,true); return; }
+  if(x.view==='pd'){ capsule(svg,165,150,x,1,true); capsule(svg,435,150,x,1,true); const gap1=165+x.rx, gap2=435-x.rx;
+    el('line',{x1:gap1+16,y1:150,x2:gap2-16,y2:150,stroke:'var(--share)','stroke-width':3,'stroke-dasharray':'2 6','stroke-linecap':'round'},svg);
+    el('text',{x:300,y:122,'text-anchor':'middle',class:'s-txt'},svg,'attraction'); el('text',{x:300,y:282,'text-anchor':'middle',class:'s-mut'},svg,'permanent dipole–dipole force'); return; }
+  // vdw: fluctuating
+  const s=Math.sin(t*2.1)+0.45*Math.sin(t*5.3+1), s2=Math.sin(t*2.1-0.6)+0.45*Math.sin(t*5.3+0.4);
+  capsule(svg,165,150,x,s,true,true); capsule(svg,435,150,x,s2,true,true);
+  if(s>0.4&&s2>0.2){ el('line',{x1:165+x.rx+14,y1:150,x2:435-x.rx-14,y2:150,stroke:'var(--share)','stroke-width':3,'stroke-dasharray':'2 6','stroke-linecap':'round'},svg); el('text',{x:300,y:122,'text-anchor':'middle',class:'s-txt'},svg,'temporary attraction'); }
+  el('text',{x:300,y:282,'text-anchor':'middle',class:'s-mut'},svg,'induced dipole–dipole (van der Waals) force'); }
+function capsule(svg,cx,cy,x,shift,labels,temp){ const rx=x.rx, ry=40, id='cg'+cx;
+  const defs=el('defs',{},svg), g=el('radialGradient',{id,cx:0.5+0.32*Math.max(-1,Math.min(1,shift)),cy:0.5,r:0.65},defs); el('stop',{offset:0,'stop-color':'var(--da)','stop-opacity':0.55},g); el('stop',{offset:1,'stop-color':'var(--da)','stop-opacity':0.08},g);
+  el('ellipse',{cx,cy,rx,ry,fill:`url(#${id})`,stroke:'var(--da)','stroke-opacity':.5,'stroke-width':1.5},svg);
+  el('text',{x:cx,y:cy+7,'text-anchor':'middle',class:'s-sym','font-size':20},svg,sub(x.f));
+  if(labels&&Math.abs(shift)>0.35){ const neg=shift>0?1:-1; el('text',{x:cx+neg*(rx-14),y:cy-ry-8,'text-anchor':'middle',class:'dlt','font-size':18},svg,'δ−'); el('text',{x:cx-neg*(rx-14),y:cy-ry-8,'text-anchor':'middle',class:'dlt pos','font-size':18},svg,'δ+'); }
+  if(temp&&labels) el('text',{x:cx,y:cy+ry+22,'text-anchor':'middle',class:'s-mut'},svg,Math.abs(shift)>0.35?'temporary dipole':''); }
+function hbDraw(svg,x,show){ const T=HBT[x.f], Ax=190, Ay=150, BH=56, Bx=Ax+BH+132, By=Ay;
+  const draw=(ox,oy,L,isB)=>{
+    L.subs.forEach(s=>{ const t=s.ang*D2R, len=s.el==='H'?BH:62; el('line',{x1:ox,y1:oy,x2:ox+Math.cos(t)*len,y2:oy+Math.sin(t)*len,class:'bondline'},svg); });
+    L.lps.forEach((a,k)=>{ const t=a*D2R, cx=ox+Math.cos(t)*32, cy=oy+Math.sin(t)*32; const hi=show&&isB&&k===0; el('circle',{cx:cx-5*Math.sin(t),cy:cy+5*Math.cos(t),r:3.8,fill:hi?'var(--da)':'var(--muted)'},svg); el('circle',{cx:cx+5*Math.sin(t),cy:cy-5*Math.cos(t),r:3.8,fill:hi?'var(--da)':'var(--muted)'},svg); });
+    L.subs.forEach(s=>{ const t=s.ang*D2R, len=s.el==='H'?BH:62, hx=ox+Math.cos(t)*len, hy=oy+Math.sin(t)*len; if(s.el==='H'){ el('circle',{cx:hx,cy:hy,r:14,fill:'var(--el-h)',stroke:'var(--ink)','stroke-opacity':.4,'stroke-width':1.5},svg); el('text',{x:hx,y:hy+5,'text-anchor':'middle',class:'s-sym','font-size':14},svg,'H'); }
+      else { el('circle',{cx:hx,cy:hy,r:21,fill:'var(--el-c)'},svg); el('text',{x:hx,y:hy+5,'text-anchor':'middle',class:'s-onfill','font-size':13},svg,s.el); } });
+    el('circle',{cx:ox,cy:oy,r:22,fill:`var(${T.e})`},svg); el('text',{x:ox,y:oy+6,'text-anchor':'middle',class:'s-onfill','font-size':18},svg,T.X);
+    if(show) el('text',{x:ox+(isB?0:-2),y:oy+44,'text-anchor':'middle',class:'dlt','font-size':17},svg,'δ−'); };
+  draw(Ax,Ay,T.A,false); draw(Bx,By,T.B,true);
+  if(show){ el('text',{x:Ax+BH,y:Ay-22,'text-anchor':'middle',class:'dlt pos','font-size':17},svg,'δ+');
+    el('line',{x1:Ax+BH+17,y1:Ay,x2:Bx-42,y2:By,stroke:'var(--share)','stroke-width':3,'stroke-dasharray':'3 6','stroke-linecap':'round'},svg);
+    const mid=(Ax+BH+Bx-26)/2+16; el('text',{x:mid,y:Ay-16,'text-anchor':'middle',class:'s-txt'},svg,'hydrogen bond'); el('text',{x:mid,y:Ay+82,'text-anchor':'middle',class:'s-mut'},svg,'H bonds to a lone pair; X–H···X close to 180°'); }
+  el('text',{x:300,y:282,'text-anchor':'middle',class:'s-mut'},svg,show?`${sub(x.f)} molecules: ${T.X}–H···${T.X}`:'Which forces act between these molecules?'); }
+fxSet(3);
+LOOPS.forces={tick(dt,t){ const x=FX[FS.i]; if(FS.checked&&x.view==='vdw'&&!reduceMotion) fxDraw(t); vdTick(t); }};
+
+/* van der Waals animation */
+const NG=[['He',2,-269,22],['Ne',10,-246,30],['Ar',18,-186,38],['Kr',36,-153,44],['Xe',54,-108,52]];
+let VD=2;
+$('#vdPick').innerHTML=NG.map((g,i)=>`<button class="chip" data-i="${i}" aria-pressed="${i===VD}">${g[0]}</button>`).join('');
+$('#vdPick').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ VD=+b.dataset.i; setPressed($('#vdPick'),b); vdTick(performance.now()/1000,true); }));
+function vdTick(t,force){ const svg=$('#vdwSvg'); if(!force&&reduceMotion&&svg.childNodes.length) return; svg.innerHTML=''; const [e,n,bp,r]=NG[VD], amp=0.15+0.85*(VD/4);
+  const s=reduceMotion?0.8:Math.sin(t*1.9)+0.4*Math.sin(t*4.7+1), s2=reduceMotion?0.7:Math.sin(t*1.9-0.5)+0.4*Math.sin(t*4.7+0.5);
+  const defs=el('defs',{},svg);
+  [[170,s],[350,s2]].forEach(([cx,sh],k)=>{ const g=el('radialGradient',{id:'vg'+k,cx:0.5+0.3*amp*Math.max(-1,Math.min(1,sh)),cy:0.5,r:0.6},defs); el('stop',{offset:0,'stop-color':'var(--da)','stop-opacity':0.6},g); el('stop',{offset:1,'stop-color':'var(--da)','stop-opacity':0.05},g);
+    el('circle',{cx,cy:90,r:r+16,fill:`url(#vg${k})`},svg); el('circle',{cx,cy:90,r:5,fill:'var(--ink)'},svg); el('text',{x:cx,y:90+r+38,'text-anchor':'middle',class:'s-sym','font-size':16},svg,e);
+    if(Math.abs(sh)*amp>0.3){ const neg=sh>0?1:-1; el('text',{x:cx+neg*(r+4),y:42,'text-anchor':'middle',class:'dlt','font-size':15},svg,'δ−'); el('text',{x:cx-neg*(r+4),y:42,'text-anchor':'middle',class:'dlt pos','font-size':15},svg,'δ+'); } });
+  if(s*amp>0.35&&s2*amp>0.2) el('line',{x1:170+r+18,y1:90,x2:350-r-18,y2:90,stroke:'var(--share)','stroke-width':3,'stroke-dasharray':'2 6','stroke-linecap':'round'},svg);
+  $('#vdCap').textContent=`${e}: ${n} electrons, boiling point ${minus(bp)} °C. Electrons move constantly, so for an instant one side of an atom has more of them: a temporary dipole. It induces a dipole in the next atom, and the two attract. More electrons give bigger temporary dipoles, stronger van der Waals forces and a higher boiling point.`; }
+
+/* higher or lower */
+const HL=[
+  [['H₂O','water',100],['H₂S','hydrogen sulfide',-60],'Water forms hydrogen bonds (H bonded to O). H₂S only has permanent dipole–dipole and van der Waals forces, even though it has more electrons.'],
+  [['NH₃','ammonia',-33],['PH₃','phosphine',-88],'NH₃ forms hydrogen bonds; PH₃ cannot, because P is not electronegative enough.'],
+  [['Br₂','bromine',59],['Cl₂','chlorine',-34],'Br₂ has more electrons (70 vs 34), so its van der Waals forces are stronger.'],
+  [['Kr','krypton',-153],['Ar','argon',-186],'Krypton has more electrons (36 vs 18): stronger van der Waals forces.'],
+  [['butane','C₄H₁₀, straight chain',-1],['2-methylpropane','C₄H₁₀, branched',-12],'Same formula, but the straight chain has more surface contact between molecules, so stronger van der Waals forces.'],
+  [['hexane','C₆H₁₄',69],['pentane','C₅H₁₂',36],'Hexane has a longer chain and more electrons, so stronger van der Waals forces.'],
+  [['HCl','Mᵣ 36.5',-85],['F₂','Mᵣ 38',-188],'Similar numbers of electrons, but HCl is polar, so permanent dipole–dipole forces add to the van der Waals forces.'],
+  [['propanone','CH₃COCH₃, Mᵣ 58',56],['butane','C₄H₁₀, Mᵣ 58',-1],'Same Mᵣ, but propanone is polar (C=O), so it has permanent dipole–dipole forces as well as van der Waals forces.'],
+  [['propan-1-ol','CH₃CH₂CH₂OH, Mᵣ 60',97],['propanone','CH₃COCH₃, Mᵣ 58',56],'Propan-1-ol has an O–H group, so it forms hydrogen bonds. Propanone has no O–H, so it cannot.'],
+  [['CH₃Cl','chloromethane',-24],['CH₃F','fluoromethane',-78],'A trap: neither can hydrogen bond (the H atoms are on carbon). Both are polar, but CH₃Cl has more electrons, so stronger van der Waals forces.']
+];
+const HS={order:shuffle(HL.map((_,i)=>i)),k:0,score:0,answered:false};
+function hlShow(){ const host=$('#hlPair'); if(HS.k>=HL.length){ host.innerHTML=`<p class="verdict good" style="grid-column:1/-1"><strong>Finished: ${HS.score} / ${HL.length}</strong><span class="small">Press Next pair to play again.</span></p>`; $('#hlWhy').textContent=''; $('#hlCount').textContent=''; return; }
+  const [a,b,why]=HL[HS.order[HS.k]], pair=Math.random()<.5?[a,b]:[b,a]; HS.answered=false;
+  host.innerHTML=pair.map((m,i)=>`<button class="vsbtn" data-i="${i}"><b>${m[0]}</b><span class="small">${m[1]}</span><span class="bpv" hidden>${minus(m[2])} °C</span></button>`).join('<span class="or">or</span>');
+  host.querySelectorAll('.vsbtn').forEach(btn=>btn.addEventListener('click',()=>{ if(HS.answered) return; HS.answered=true; const hi=pair[0][2]>pair[1][2]?0:1, ok=+btn.dataset.i===hi; if(ok) HS.score++;
+    host.querySelectorAll('.vsbtn').forEach(x=>{ x.disabled=true; x.querySelector('.bpv').hidden=false; if(+x.dataset.i===hi) x.classList.add('right'); }); if(!ok) btn.classList.add('wrong');
+    $('#hlWhy').innerHTML=`<b>${ok?'Correct.':'Not quite.'}</b> ${why}`; $('#hlScore').textContent=`${HS.score} / ${HL.length}`; }));
+  $('#hlWhy').textContent=''; $('#hlCount').textContent=`Pair ${HS.k+1} of ${HL.length}`; }
+$('#hlNext').addEventListener('click',()=>{ if(HS.k>=HL.length){ HS.order=shuffle(HS.order); HS.k=0; HS.score=0; $('#hlScore').textContent=`0 / ${HL.length}`; } else HS.k++; hlShow(); });
+hlShow();
+
+/* boiling point explorer */
+const BPS={
+  hyd:{exp:'Within each group, boiling point rises from period 3 to period 5: more electrons give stronger van der Waals forces. NH₃, H₂O and HF break the trend because they form hydrogen bonds. CH₄ cannot (carbon is not electronegative enough), so group 14 follows the trend all the way.'},
+  alk:{exp:'Each extra CH₂ adds electrons and surface contact, so van der Waals forces get stronger and boiling point rises. The branched isomers of C₅H₁₂ boil lower: they are more compact, so there is less surface contact between molecules.'},
+  ng:{exp:'In both series, boiling point rises with the number of electrons: more electrons give bigger temporary dipoles and stronger van der Waals forces. Neither series has permanent dipoles.'},
+  mr:{exp:'Molecules with similar Mᵣ have similar van der Waals forces, so the difference comes from the other forces. A permanent dipole raises the boiling point; hydrogen bonding raises it much more.'}
+};
+const HYD=[['Group 14',[['CH₄',-162],['SiH₄',-112],['GeH₄',-88],['SnH₄',-52]]],['Group 15',[['NH₃',-33,1],['PH₃',-88],['AsH₃',-62],['SbH₃',-17]]],['Group 16',[['H₂O',100,1],['H₂S',-60],['H₂Se',-41],['H₂Te',-2]]],['Group 17',[['HF',20,1],['HCl',-85],['HBr',-67],['HI',-35]]]];
+let BPSET='hyd';
+$('#bpSet').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ setPressed($('#bpSet'),b); BPSET=b.dataset.s; bpChart(); }));
+function bpChart(){ const svg=$('#bpChart'); svg.innerHTML=''; svg.setAttribute('viewBox',BPSET==='mr'?'0 0 760 390':'0 0 760 360'); $('#bpExp').textContent=BPS[BPSET].exp;
+  const tip=(node,txt)=>{ el('title',{},node,txt); };
+  if(BPSET==='hyd'){ const left=60,y0=60,ph=250,pw=170,lo=-200,hi=130,y=v=>y0+(hi-v)/(hi-lo)*ph;
+    [-200,-150,-100,-50,0,50,100].forEach(v=>{ el('line',{x1:left,x2:left+4*pw-10,y1:y(v),y2:y(v),stroke:'var(--line)','stroke-width':v===0?1.4:0.8},svg); el('text',{x:left-8,y:y(v)+4,'text-anchor':'end',class:'s-mut'},svg,minus(v)); });
+    el('text',{x:14,y:16,class:'s-mut'},svg,'Boiling point (°C)');
+    HYD.forEach(([g,pts],gi)=>{ const x=p=>left+gi*pw+24+p*42; el('text',{x:left+gi*pw+87,y:y0-24,'text-anchor':'middle',class:'s-head'},svg,g);
+      el('polyline',{points:pts.map((q,p)=>`${x(p)},${y(q[1])}`).join(' '),fill:'none',stroke:'var(--muted)','stroke-width':2,opacity:.6},svg);
+      pts.forEach((q,p)=>{ const up=p===0?(pts[1][1]<q[1]):(p===3); const dn=!up&&(p===0||pts[p-1][1]>q[1])&&(p===3||pts[p+1][1]>q[1]);
+        const c=el('circle',{cx:x(p),cy:y(q[1]),r:6,fill:q[2]?'var(--xa)':'var(--muted)',class:'bp-pt'},svg); tip(c,`${q[0]}: ${minus(q[1])} °C`);
+        const fy=up?y(q[1])-24:dn?y(q[1])+20:y(q[1])-11, vy=up?y(q[1])-10:dn?y(q[1])+34:y(q[1])+20;
+        el('text',{x:x(p),y:fy,'text-anchor':'middle',class:'s-txt','font-weight':q[2]?700:400,fill:q[2]?'var(--xa)':'var(--ink)'},svg,q[0]); el('text',{x:x(p),y:vy,'text-anchor':'middle',class:'s-mut'},svg,minus(q[1])); });
+      [2,3,4,5].forEach((n,p)=>el('text',{x:x(p),y:y0+ph+20,'text-anchor':'middle',class:'s-mut'},svg,n)); });
+    el('text',{x:left+2*pw-5,y:y0+ph+42,'text-anchor':'middle',class:'s-mut'},svg,'Period of the central atom · teal = forms hydrogen bonds'); return; }
+  if(BPSET==='alk'){ const A=[['CH₄',1,-162],['C₂H₆',2,-89],['C₃H₈',3,-42],['C₄H₁₀',4,-1],['C₅H₁₂',5,36],['C₆H₁₄',6,69],['C₇H₁₆',7,98],['C₈H₁₈',8,126]], BR=[['2-methylbutane',28],['2,2-dimethylpropane',10]];
+    const left=70,right=720,y0=30,ph=280,lo=-200,hi=150,x=n=>left+(n-1)*(right-left)/7.6,y=v=>y0+(hi-v)/(hi-lo)*ph;
+    [-200,-150,-100,-50,0,50,100,150].forEach(v=>{ el('line',{x1:left,x2:right,y1:y(v),y2:y(v),stroke:'var(--line)','stroke-width':v===0?1.4:0.8},svg); el('text',{x:left-8,y:y(v)+4,'text-anchor':'end',class:'s-mut'},svg,minus(v)); });
+    el('polyline',{points:A.map(a=>`${x(a[1])},${y(a[2])}`).join(' '),fill:'none',stroke:'var(--xa)','stroke-width':2.5},svg);
+    A.forEach(a=>{ const c=el('circle',{cx:x(a[1]),cy:y(a[2]),r:6,fill:'var(--xa)',class:'bp-pt'},svg); tip(c,`${a[0]}: ${minus(a[2])} °C`); const r1=a[1]===1; el('text',{x:x(a[1])+(r1?12:-10),y:y(a[2])-10,'text-anchor':r1?'start':'end',class:'s-lab'},svg,a[0]); el('text',{x:x(a[1])+(r1?12:-10),y:y(a[2])+(r1?10:18),'text-anchor':r1?'start':'end',class:'s-mut'},svg,minus(a[2])); });
+    BR.forEach((b,k)=>{ const cx=x(5.45), cy=y(b[1]); const c=el('circle',{cx,cy,r:6,fill:'var(--muted)',class:'bp-pt'},svg); tip(c,`${b[0]}: ${b[1]} °C`); el('text',{x:cx+12,y:cy+(k?12:0),class:'s-lab'},svg,`${b[0]} ${b[1]}`); });
+    A.forEach(a=>el('text',{x:x(a[1]),y:y0+ph+20,'text-anchor':'middle',class:'s-mut'},svg,a[1]));
+    el('text',{x:(left+right)/2,y:y0+ph+42,'text-anchor':'middle',class:'s-mut'},svg,'Carbon atoms per molecule · grey = branched isomers of C₅H₁₂'); return; }
+  if(BPSET==='ng'){ const S=[['Noble gases','var(--muted)',[['He',2,-269],['Ne',10,-246],['Ar',18,-186],['Kr',36,-153],['Xe',54,-108]]],['Halogens','var(--xa)',[['F₂',18,-188],['Cl₂',34,-34],['Br₂',70,59],['I₂',106,184]]]];
+    const left=70,right=720,y0=30,ph=280,lo=-300,hi=200,x=n=>left+n/110*(right-left),y=v=>y0+(hi-v)/(hi-lo)*ph;
+    [-300,-200,-100,0,100,200].forEach(v=>{ el('line',{x1:left,x2:right,y1:y(v),y2:y(v),stroke:'var(--line)','stroke-width':v===0?1.4:0.8},svg); el('text',{x:left-8,y:y(v)+4,'text-anchor':'end',class:'s-mut'},svg,minus(v)); });
+    S.forEach(([nm,col,pts])=>{ el('polyline',{points:pts.map(p=>`${x(p[1])},${y(p[2])}`).join(' '),fill:'none',stroke:col,'stroke-width':2.5},svg);
+      pts.forEach(p=>{ const c=el('circle',{cx:x(p[1]),cy:y(p[2]),r:6,fill:col,class:'bp-pt'},svg); tip(c,`${p[0]}: ${p[1]} electrons, ${minus(p[2])} °C`); el('text',{x:x(p[1])+(nm==='Halogens'?-10:10),y:y(p[2])+(nm==='Halogens'?-10:18),'text-anchor':nm==='Halogens'?'end':'start',class:'s-lab'},svg,`${p[0]} ${minus(p[2])}`); });
+      if(nm==='Halogens') el('text',{x:x(52)-14,y:y(12)-14,'text-anchor':'end',class:'s-head',fill:col},svg,nm); else { const l=pts[pts.length-1]; el('text',{x:x(l[1])+12,y:y(l[2])-10,class:'s-head',fill:col},svg,nm); } });
+    [0,20,40,60,80,100].forEach(n=>el('text',{x:x(n),y:y0+ph+20,'text-anchor':'middle',class:'s-mut'},svg,n));
+    el('text',{x:(left+right)/2,y:y0+ph+42,'text-anchor':'middle',class:'s-mut'},svg,'Electrons per molecule'); return; }
+  if(BPSET==='mr'){ const G=[['Mᵣ about 30–34',[['ethane C₂H₆',30,-89,0],['fluoromethane CH₃F',34,-78,1],['methanol CH₃OH',32,65,2]]],['Mᵣ about 36–38',[['fluorine F₂',38,-188,0],['hydrogen chloride HCl',36.5,-85,1]]],['Mᵣ about 58–60',[['butane C₄H₁₀',58,-1,0],['propanone CH₃COCH₃',58,56,1],['propan-1-ol C₃H₇OH',60,97,2]]]];
+    const COL=['var(--muted)','var(--share)','var(--xa)'], left=250,right=730,lo=-200,hi=120,x=v=>left+(v-lo)/(hi-lo)*(right-left); let yy=30;
+    [-200,-100,0,100].forEach(v=>{ el('line',{x1:x(v),x2:x(v),y1:16,y2:330,stroke:'var(--line)','stroke-width':v===0?1.4:0.8},svg); el('text',{x:x(v),y:348,'text-anchor':'middle',class:'s-mut'},svg,minus(v)+' °C'); });
+    G.forEach(([h,rows])=>{ el('text',{x:10,y:yy,class:'s-head'},svg,h); yy+=2; rows.forEach(r=>{ yy+=26; el('text',{x:24,y:yy+5,class:'s-lab'},svg,r[0]); el('line',{x1:x(lo),x2:x(r[2]),y1:yy,y2:yy,stroke:COL[r[3]],'stroke-width':2,opacity:.5},svg); const c=el('circle',{cx:x(r[2]),cy:yy,r:7,fill:COL[r[3]],class:'bp-pt'},svg); tip(c,`${r[0]}: ${minus(r[2])} °C`); el('text',{x:x(r[2])+12,y:yy+4,class:'s-mut'},svg,minus(r[2])); }); yy+=40; });
+    [['van der Waals only',0],['plus permanent dipole',1],['plus hydrogen bonds',2]].forEach(([t,k],i)=>{ el('circle',{cx:150+i*210,cy:376,r:6,fill:COL[k]},svg); el('text',{x:162+i*210,y:381,class:'s-lab'},svg,t); }); }
+}
+bpChart();
+/* ================= STATION 6: quiz ================= */
+const QUIZ=[
+  {q:'Which statement best describes metallic bonding?',o:['Attraction between positive metal ions and delocalised electrons','Attraction between positive and negative ions','A shared pair of electrons between two metal atoms','Attraction between neighbouring metal atoms caused by temporary dipoles'],a:0,e:'Metal atoms lose their outer electrons into a delocalised “sea”. The positive ions and these electrons attract each other strongly.'},
+  {q:'What is the bond angle in the ammonium ion, NH₄⁺?',o:['109.5°','107°','104.5°','90°'],a:0,e:'N has 5 + 4 − 1 = 8 outer electrons: four bonding pairs and no lone pairs, so NH₄⁺ is tetrahedral (109.5°). 107° is NH₃, which has a lone pair.'},
+  {q:'Which order of repulsion between electron pairs is correct?',o:['lone–lone > lone–bonding > bonding–bonding','bonding–bonding > lone–bonding > lone–lone','lone–bonding > lone–lone > bonding–bonding','All pairs repel equally'],a:0,e:'Lone pairs are held closer to the central atom and spread out more, so they repel most strongly.'},
+  {q:'B–F bonds are polar. Why is BF₃ a non-polar molecule?',o:['Its trigonal planar shape is symmetrical, so the three bond dipoles cancel','B and F have the same electronegativity','BF₃ has a lone pair that cancels the dipoles','BF₃ is an ionic compound'],a:0,e:'Three equal dipoles at 120° in a flat triangle add up to zero. Polar bonds do not always make a polar molecule.'},
+  {q:'Which substance forms hydrogen bonds between its molecules?',o:['CH₃NH₂','CH₃F','CH₄','HBr'],a:0,e:'CH₃NH₂ has H bonded to N, and N has a lone pair. In CH₃F the H atoms are bonded to carbon, so it cannot hydrogen bond, even though it contains F.'},
+  {q:'When iodine sublimes, what is overcome?',o:['Van der Waals forces between I₂ molecules','The covalent bond between the two iodine atoms','Ionic bonds between I⁺ and I⁻','Hydrogen bonds between I₂ molecules'],a:0,e:'Iodine is molecular. Changing state only separates the molecules; every I₂ molecule stays intact.'},
+  {q:'Why does graphite conduct electricity but diamond does not?',o:['Each C in graphite forms 3 bonds, leaving one delocalised electron per atom','Graphite contains ions that can move between the layers','Diamond has weaker covalent bonds than graphite','Graphite is a metal'],a:0,e:'In diamond all four outer electrons of each carbon are used in bonds, so there are no delocalised electrons to carry charge.'},
+  {q:'Why does sodium chloride have a much higher melting point than iodine?',o:['Strong attraction between oppositely charged ions in a giant lattice, compared with weak forces between I₂ molecules','Sodium chloride has stronger covalent bonds','Iodine molecules are held by hydrogen bonds, which are weak','Sodium chloride has more electrons'],a:0,e:'Melting NaCl means overcoming the attraction between millions of ions in every direction. Melting iodine only overcomes van der Waals forces between molecules.'},
+  {q:'Which noble gas has the highest boiling point?',o:['Xenon','Krypton','Argon','Neon'],a:0,e:'Xenon has the most electrons (54), so it forms the largest temporary dipoles and the strongest van der Waals forces.'},
+  {q:'Why does ice float on water?',o:['Hydrogen bonds hold the molecules further apart in an open lattice, so ice is less dense','Ice contains trapped air bubbles','The covalent bonds in ice are longer than in water','Water molecules in ice have no hydrogen bonds'],a:0,e:'In ice every molecule is hydrogen bonded to four others in an open structure. When it melts, the lattice collapses and the molecules pack closer, so water is denser.'},
+  {q:'What is the shape of an SF₄ molecule?',o:['Seesaw','Tetrahedral','Square planar','Trigonal pyramidal'],a:0,e:'S has 6 + 4 = 10 electrons: five pairs, four bonding and one lone pair. The lone pair sits in the equatorial plane, giving a seesaw (distorted tetrahedral) shape.'},
+  {q:'Which species contains a co-ordinate (dative covalent) bond?',o:['H₃O⁺','H₂O','NH₃','CH₄'],a:0,e:'In H₃O⁺ the oxygen in water donates a lone pair to H⁺. Once formed, all three O–H bonds are identical.'}
+];
+const QS={ans:{}};
+function shuffleQ(){ QUIZ.forEach(it=>{ it.order=shuffle(it.o.map((_,i)=>i)); }); }
+function renderQuiz(){ const host=$('#quiz'); host.innerHTML='';
+  QUIZ.forEach((it,n)=>{ const d=document.createElement('div'); d.className='q';
+    d.innerHTML=`<span class="qn">Question ${n+1}</span><p class="qt">${it.q}</p><div class="opts"></div><p class="fb" hidden></p>`;
+    const opts=d.querySelector('.opts'), fb=d.querySelector('.fb');
+    it.order.forEach(oi=>{ const b=document.createElement('button'); b.className='opt'; b.textContent=it.o[oi]; b.dataset.i=oi;
+      b.addEventListener('click',()=>{ if(n in QS.ans) return; QS.ans[n]=oi; opts.querySelectorAll('.opt').forEach(x=>{ x.disabled=true; if(+x.dataset.i===it.a) x.classList.add('right'); });
+        if(oi!==it.a) b.classList.add('wrong'); fb.hidden=false; fb.innerHTML=`<b>${oi===it.a?'Correct.':'Not quite.'}</b> ${it.e}`; qScore(); });
+      opts.appendChild(b); });
+    host.appendChild(d); });
+  qScore(); }
+function qScore(){ const r=Object.keys(QS.ans).filter(k=>QS.ans[k]===QUIZ[k].a).length; $('#score').textContent=`${r} / ${QUIZ.length}`; }
+$('#quizReset').addEventListener('click',()=>{ QS.ans={}; shuffleQ(); renderQuiz(); });
+shuffleQ(); renderQuiz();
+(function(){ const h=(location.hash||'').slice(1); if(TABS.includes(h)) showTab(h); })();
+</script>
+</body>
+</html>
